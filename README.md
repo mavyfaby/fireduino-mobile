@@ -4,9 +4,9 @@ A mobile app for managing Fireduino devices.
 
 ## Author
 
-- [@mavyfaby](@mavyfaby) Maverick Fabroa
-- [@Dino.tine](@Christine23) Christine Lange
-- Jewel Cedrick Gesim
+- [@mavyfaby](https://github.com/mavyfaby) Maverick Fabroa
+- [@Dino.tine](https://github.com/Christine23) Christine Lange
+- [@cedrickje20](https://github.com/cedrickje20) Jewel Cedrick Gesim
 
 ## License
 
