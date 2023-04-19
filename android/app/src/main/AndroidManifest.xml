@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cloud.fireduino.fireduino">
    <application
-        android:label="fireduino"
+        android:label="Fireduino"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
