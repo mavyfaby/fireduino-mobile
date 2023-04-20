@@ -1,9 +1,12 @@
-import 'package:fireduino/app/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../custom/decoration.dart';
 import '../env/config.dart';
+
+import 'home.dart';
+import 'signup.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -22,7 +25,7 @@ class LoginPage extends StatelessWidget {
                 SvgPicture.asset("assets/svg/fireduino_icon.svg"),
                 const SizedBox(height: 16),
         
-                Text("Fireduino", style: Get.textTheme.headlineLarge!.copyWith(
+                Text("Fireduino", style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   color: Get.theme.colorScheme.primary,
                   fontWeight: FontWeight.bold)
                 ), 
@@ -30,26 +33,26 @@ class LoginPage extends StatelessWidget {
                 const Text(appTagline),
 
                 const SizedBox(height: 32),
-                const SizedBox(
+                SizedBox(
                   width: 300,
                   child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Username or Email",
-                      prefixIcon: Icon(Icons.person_outline_rounded),
-                      filled: true
-                    ),
+                    decoration: CustomInputDecoration(
+                      context: context,
+                      labelText: "Username or email",
+                      prefixIcon: const Icon(Icons.person_outline_rounded),
+                    )
                   ),
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(
+                SizedBox(
                   width: 300,
                   child: TextField(
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: CustomInputDecoration(
+                      context: context,
                       labelText: "Password",
-                      prefixIcon: Icon(Icons.lock_outline_rounded),
-                      filled: true
-                    ),
+                      prefixIcon: const Icon(Icons.lock_outline_rounded),
+                    )
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -74,9 +77,9 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 24),
               child: TextButton(
                 onPressed: () {
-                      
+                  Get.to(() => const CreateAccountPage());
                 },
-                child: const Text("Forgot password")
+                child: const Text("Create an account")
               ),
             ),
           )

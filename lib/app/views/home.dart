@@ -1,6 +1,7 @@
-import 'package:fireduino/app/controllers/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../controllers/home.dart';
 
 import 'dashboard/dashboard.dart';
 import 'fireduinos/fireduinos.dart';
@@ -18,7 +19,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       key: _drawerKey,
       appBar: AppBar(
-        elevation: 1,
         leading: IconButton(
           onPressed: () {
             _drawerKey.currentState!.openDrawer();

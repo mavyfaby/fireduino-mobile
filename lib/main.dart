@@ -1,11 +1,11 @@
-import 'package:fireduino/app/controllers/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'app/controllers/home.dart';
+import 'app/controllers/signup.dart';
+
 import 'app/env/config.dart';
 import 'app/theme/theme.dart';
-
-import 'app/views/home.dart';
 import 'app/views/login.dart';
 
 void main() {
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
+    Get.put(CreateAccountController());
 
     return GetMaterialApp(
       title: appName,
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           lightColorScheme.surface
         ),
         appBarTheme: AppBarTheme(
+          elevation: 1,
           titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
             color: lightColorScheme.onSurface,
             fontWeight: FontWeight.w500,
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
           darkColorScheme.surface
         ),
         appBarTheme: AppBarTheme(
+          elevation: 1,
           titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
             color: darkColorScheme.onSurface,
             fontWeight: FontWeight.w500,
