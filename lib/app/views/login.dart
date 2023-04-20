@@ -1,3 +1,4 @@
+import 'package:fireduino/app/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -58,7 +59,7 @@ class LoginPage extends StatelessWidget {
                   height: 50,
                   child: FilledButton(
                     onPressed: () {
-
+                      Get.to(() => HomePage());
                     },
                     child: const Text("Login")
                   ),
