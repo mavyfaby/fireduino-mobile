@@ -1,4 +1,5 @@
 import 'package:fireduino/app/network/request.dart';
+import 'package:fireduino/app/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -147,6 +148,77 @@ class CreateAccountPage extends StatelessWidget {
               // Show error dialog
               showAppDialog("Error", FireduinoAPI.message);
             }
+
+            // Account
+            if (currentStep == 3) {
+              // Check if username is empty
+              if (ctrl.username.value.isEmpty) {
+                return showAppDialog("Username empty", "Please enter a username");
+              }
+
+              // Check if username is 8 characters or more
+              if (ctrl.username.value.length < 8) {
+                return showAppDialog("Username too short", "Please enter a username that is 8 characters or more");
+              }
+
+              // Check if password is empty
+              if (ctrl.password.value.isEmpty) {
+                return showAppDialog("Password empty", "Please enter a password");
+              }
+
+              // Check if password is 8 characters or more
+              if (ctrl.password.value.length < 4) {
+                return showAppDialog("Password too short", "Please enter a password that is 4 characters or more");
+              }
+
+              // Check if password confirmation is empty
+              if (ctrl.passwordConfirm.value.isEmpty) {
+                return showAppDialog("Password confirmation empty", "Please enter a password confirmation");
+              }
+
+              // Check if password and password confirmation match
+              if (ctrl.password.value != ctrl.passwordConfirm.value) {
+                return showAppDialog("Passwords do not match", "Please make sure your passwords match");
+              }
+
+              // Show loading dialog
+              showLoader("Creating account...");
+
+              // Create account
+              final bool success = await FireduinoAPI.createAccount(
+                ctrl.firstName.value,
+                ctrl.lastName.value,
+                ctrl.email.value,
+                ctrl.username.value,
+                ctrl.password.value,
+                ctrl.establishmentId.value,
+                ctrl.inviteKey.value,
+              );
+
+              // Close loading dialog
+              Get.back();
+
+              // Check if account was created
+              if (success) {
+                // Show success dialog
+                showAppDialog("Success", "Your account has been created successfully", actions: [
+                  TextButton(
+                    child: const Text("Go to login"),
+                    onPressed: () {
+                      // Reset
+                      ctrl.reset();
+                      // Close dialog
+                      Get.back();
+                      // Go to login page
+                      Get.to(() => const LoginPage());
+                    },
+                  ),
+                ]);
+              } else {
+                // Show error dialog
+                showAppDialog("Error", FireduinoAPI.message);
+              }
+            }
           },
           onStepCancel: () {
     
@@ -190,7 +262,7 @@ class Personal extends StatelessWidget {
               prefixIcon: const Icon(Icons.person_outlined),
             ),
             onChanged: (value) {
-              ctrl.firstName.value = value;
+              ctrl.firstName.value = value.trim();
             },
           ),
           const SizedBox(height: 16),
@@ -203,7 +275,7 @@ class Personal extends StatelessWidget {
               prefixIcon: const Icon(Icons.person_outlined),
             ),
             onChanged: (value) {
-              ctrl.lastName.value = value;
+              ctrl.lastName.value = value.trim();
             },
           ),
         ],
@@ -232,7 +304,7 @@ class Contact extends StatelessWidget {
               prefixIcon: const Icon(Icons.email_outlined),
             ),
             onChanged: (value) {
-              ctrl.email.value = value;
+              ctrl.email.value = value.trim();
             },
           ),
         ],
@@ -330,7 +402,7 @@ class Establishment extends StatelessWidget {
               prefixIcon: const Icon(Icons.key),
             ),
             onChanged: (value) {
-              ctrl.inviteKey.value = value;
+              ctrl.inviteKey.value = value.trim();
             },
           )
         ],
@@ -345,6 +417,8 @@ class Account extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ctrl = Get.find<CreateAccountController>();
+    final isPassVisible = false.obs;
+    final isConfirmVisible = false.obs;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -357,24 +431,50 @@ class Account extends StatelessWidget {
               context: context,
               labelText: "Username",
               prefixIcon: const Icon(Icons.email_outlined),
+              
             ),
             onChanged: (value) {
-              ctrl.email.value = value;
+              ctrl.username.value = value.trim();
             },
           ),
           const SizedBox(height: 16),
-          TextField(
+          Obx(() => TextField(
             maxLength: 32,
-            obscureText: true,
+            obscureText: !isPassVisible.value,
             decoration: CustomInputDecoration(
               context: context,
               labelText: "Password",
               prefixIcon: const Icon(Icons.lock_outline_rounded),
+              suffixIcon: IconButton(
+                icon: Icon(isPassVisible.value ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  isPassVisible.value = !isPassVisible.value;
+                },
+              ),
             ),
             onChanged: (value) {
-              ctrl.email.value = value;
+              ctrl.password.value = value.trim();
             },
-          ),
+          )),
+          const SizedBox(height: 16),
+          Obx(() => TextField(
+            maxLength: 32,
+            obscureText: !isConfirmVisible.value,
+            decoration: CustomInputDecoration(
+              context: context,
+              labelText: "Confirm Password",
+              prefixIcon: const Icon(Icons.lock_outline_rounded),
+              suffixIcon: IconButton(
+                icon: Icon(isConfirmVisible.value ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  isConfirmVisible.value = !isConfirmVisible.value;
+                },
+              ),
+            ),
+            onChanged: (value) {
+              ctrl.passwordConfirm.value = value.trim();
+            },
+          )),
         ],
       ),
     );

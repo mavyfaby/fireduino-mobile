@@ -91,4 +91,35 @@ class FireduinoAPI {
       return false;
     }
   }
+
+  /// Creates an account
+  static Future<bool> createAccount(String firstName, String lastName, String email, String username, String password, String establishmentId, String inviteKey) async {
+    try {
+      // Declare form data
+      final formData = {
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'username': username,
+        'password': password,
+        'establishmentId': establishmentId,
+        'inviteKey': inviteKey,
+      };
+
+      /// Get the config from the server.
+      Response response = await _connect.post(FireduinoEndpoints.createAccount, formData, contentType: 'application/x-www-form-urlencoded');
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
 }

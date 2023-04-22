@@ -6,7 +6,9 @@ class CreateAccountController extends GetxController {
   final firstName = "".obs;
   final lastName = "".obs;
   final email = "".obs;
+  final username = "".obs;
   final password = "".obs;
+  final passwordConfirm = "".obs;
   final establishment = "".obs;
   final establishmentId = "".obs;
   final inviteKey = "".obs;
@@ -31,6 +33,8 @@ class CreateAccountController extends GetxController {
     lastName.value = "";
     email.value = "";
     password.value = "";
+    username.value = "";
+    passwordConfirm.value = "";
     establishment.value = "";
     establishmentId.value = "";
     inviteKey.value = "";
