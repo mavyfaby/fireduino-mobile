@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../store/store.dart';
+import '../store/auth.dart';
+import '../store/store.dart';
 import '../models/user.dart';
 import '../network/request.dart';
 import '../utils/dialog.dart';

@@ -1,8 +1,9 @@
-import 'package:fireduino/app/env/config.dart';
+import '../env/config.dart';
 
 class FireduinoEndpoints {
-  static String establishments = "$webServerApi/establishments";
-  static String verifyKey = "$webServerApi/verify";
-  static String createAccount = "$webServerApi/account";
   static String login = "$webServerApi/login";
+  static String user = "$webServerApi/user";
+  static String verifyKey = "$webServerApi/verify";
+  static String validateToken = "$webServerApi/validate";
+  static String establishments = "$webServerApi/establishments";
 }

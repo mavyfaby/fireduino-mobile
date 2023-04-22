@@ -1,8 +1,8 @@
-import 'package:fireduino/app/network/request.dart';
-import 'package:fireduino/app/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../network/request.dart';
+import '../views/login.dart';
 import '../models/establishment.dart';
 import '../utils/dialog.dart';
 import '../controllers/signup.dart';

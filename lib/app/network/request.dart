@@ -111,7 +111,7 @@ class FireduinoAPI {
       };
 
       /// Get the config from the server.
-      Response response = await _connect.post(FireduinoEndpoints.createAccount, formData, contentType: 'application/x-www-form-urlencoded');
+      Response response = await _connect.post(FireduinoEndpoints.user, formData, contentType: 'application/x-www-form-urlencoded');
       // Set data
       setData(response);
 
@@ -140,6 +140,58 @@ class FireduinoAPI {
       Response response = await _connect.post(FireduinoEndpoints.login, formData, contentType: 'application/x-www-form-urlencoded');
       // Set data
       setData(response);
+
+      // If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) return null;
+        // Return status
+        return User.fromJson(response.body['data']);
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
+
+  /// Validates the token
+  static Future<bool> validateToken(String? token) async {
+    // If token is null
+    if (token == null) return false;
+
+    try {
+      // Request login
+      Response response = await _connect.post(FireduinoEndpoints.validateToken, { 'token': token, }, contentType: 'application/x-www-form-urlencoded');
+      // Set data
+      setData(response);
+
+      // If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) return false;
+        // Return status
+        return true;
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
+
+  /// Gets the user by token
+  static Future<User?> getUserByToken(String? token) async {
+    // If token is null
+    if (token == null) return null;
+
+    try {
+      // Request login
+      Response response = await _connect.get(FireduinoEndpoints.user, query: { 'token': token, }, contentType: 'application/x-www-form-urlencoded');
+      // Set data
+      setData(response);
+
+      print("Response: ${response.body}");
 
       // If the response is successful
       if (response.statusCode == 200) {

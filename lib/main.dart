@@ -6,15 +6,18 @@ import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/signup.dart';
 
+import 'app/routes/routes.dart';
+import 'app/store/auth.dart';
 import 'app/env/config.dart';
 import 'app/theme/theme.dart';
-import 'app/views/login.dart';
 
 void main() async {
   // Ensure that the binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize GetStorage
   await GetStorage.init();
+  // Initialize the auth store
+  await FireduinoAuth.init();
   // Run the app
   runApp(const MyApp());
 }
@@ -30,6 +33,8 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: appName,
+      initialRoute: '/home',
+      getPages: Routes.get(),
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,
@@ -61,8 +66,7 @@ class MyApp extends StatelessWidget {
             fontFamily: "Poppins",
           ),
         ),
-      ),
-      home: const LoginPage(),
+      )
     );
   }
 }

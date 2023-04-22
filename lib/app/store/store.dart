@@ -13,4 +13,5 @@ class Store {
 
   static get(StoreKeys key) => _store.read(key.value);
   static set(StoreKeys key, dynamic value) => _store.write(key.value, value);
+  static remove(StoreKeys key) => _store.remove(key.value);
 }
