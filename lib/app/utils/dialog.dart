@@ -20,3 +20,22 @@ Future<dynamic> showAppDialog(String title, String message, { List<Widget>? acti
     ),
   ));
 }
+
+/// Shows a loader with the given [message].
+void showLoader(String message) {
+  Get.dialog(
+    WillPopScope(
+      onWillPop: () async => false,
+      child: AlertDialog(
+        contentPadding: const EdgeInsets.all(32),
+        content: Row(
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(width: 16),
+            Text(message),
+          ],
+        ),
+      ),
+    ),
+  );
+}

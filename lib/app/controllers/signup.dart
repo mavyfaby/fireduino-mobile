@@ -7,9 +7,12 @@ class CreateAccountController extends GetxController {
   final lastName = "".obs;
   final email = "".obs;
   final password = "".obs;
+  final establishment = "".obs;
+  final establishmentId = "".obs;
+  final inviteKey = "".obs;
 
   void nextStep() {
-    if (currentStep.value < 2) {
+    if (currentStep.value < 3) {
       maxStep.value++;
       currentStep.value++;
     }
@@ -28,5 +31,8 @@ class CreateAccountController extends GetxController {
     lastName.value = "";
     email.value = "";
     password.value = "";
+    establishment.value = "";
+    establishmentId.value = "";
+    inviteKey.value = "";
   }
 }

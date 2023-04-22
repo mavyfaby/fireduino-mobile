@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,
-        fontFamily: "Poppins",
         scaffoldBackgroundColor: Color.alphaBlend(
           lightColorScheme.primary.withOpacity(0.05),
           lightColorScheme.surface
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         useMaterial3: true,
         colorScheme: darkColorScheme,
-        fontFamily: "Poppins",
         scaffoldBackgroundColor: Color.alphaBlend(
           darkColorScheme.primary.withOpacity(0.05),
           darkColorScheme.surface

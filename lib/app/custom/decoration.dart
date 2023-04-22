@@ -7,10 +7,12 @@ class CustomInputDecoration extends InputDecoration {
     Widget? prefixIcon,
     Widget? suffixIcon,
     InputBorder? border,
+    bool? isDense,
   }) : super(
     labelText: labelText,
     prefixIcon: prefixIcon,
     suffixIcon: suffixIcon,
+    isDense: isDense,
     filled: Theme.of(context).brightness == Brightness.dark,  
     border: border ?? (Theme.of(context).brightness == Brightness.dark ? null : const OutlineInputBorder()),
   );

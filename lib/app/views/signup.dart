@@ -1,6 +1,8 @@
+import 'package:fireduino/app/network/request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../models/establishment.dart';
 import '../utils/dialog.dart';
 import '../controllers/signup.dart';
 import '../custom/decoration.dart';
@@ -90,7 +92,7 @@ class CreateAccountPage extends StatelessWidget {
             );
           },
           currentStep: ctrl.currentStep.value,
-          onStepContinue: () {
+          onStepContinue: () async {
             final currentStep = ctrl.currentStep.value;
     
             // Personal
@@ -127,9 +129,23 @@ class CreateAccountPage extends StatelessWidget {
               return ctrl.nextStep();
             }
             
-            // Account
+            // Establishment
             if (currentStep == 2) {
-              
+              // Show loading dialog
+              showLoader("Verifying establishment...");
+              // Check if establishment exists
+              final bool isValid = await FireduinoAPI.verifyInviteKey(ctrl.establishmentId.value, ctrl.inviteKey.value);
+              // Close loading dialog
+              Get.back();
+
+              // Check if establishment exists
+              if (isValid) {
+                // Go to next step
+                return ctrl.nextStep();
+              }
+
+              // Show error dialog
+              showAppDialog("Error", FireduinoAPI.message);
             }
           },
           onStepCancel: () {
@@ -236,31 +252,77 @@ class Establishment extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         children: [
-          SearchAnchor.bar(
-            barHintText: "Search establishment",
-            barBackgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.surfaceVariant),
-            barPadding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 12)),
-            barShape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+          SearchAnchor(
             isFullScreen: false,
+            builder: (context, controller) {
+              return  TextField(
+                maxLength: 32,
+                keyboardType: TextInputType.text,
+                readOnly: true,
+                controller: controller,
+                decoration: CustomInputDecoration(
+                  context: context,
+                  labelText: "Select Establishment",
+                  prefixIcon: const Icon(Icons.business_outlined),
+                ),
+                onTap: () {
+                  controller.openView();
+                },
+              );
+            },
             suggestionsBuilder: (context, controller) {
               if (controller.text.isEmpty) {
                 return [
                   const Center(
-                    child: Text("No suggestions"),
+                    child: Text("Enter establishment name"),
                   )
                 ];
               }
 
               return [
-                const Center(
-                  child: Text("hehe"),
+                FutureBuilder(
+                  future: FireduinoAPI.fetchEstablishments(controller.text),
+                  builder: (context, snapshot) {
+
+                    if (snapshot.hasData) {
+                      final establishments = snapshot.data as List<EstablishmentModel>;
+
+                      // Check if establishments is empty
+                      if (establishments.isEmpty) {
+                        return const Center(
+                          child: Text("No establishment found"),
+                        );
+                      }
+
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: establishments.length,
+                        itemBuilder: (context, index) {
+                          final establishment = establishments[index];
+
+                          return ListTile(
+                            title: Text(establishment.name ?? "..."),
+                            onTap: () {
+                              ctrl.establishmentId.value = establishment.id != null ? establishment.id.toString() : "";
+                              controller.closeView(establishment.name);
+                            },
+                          );
+                        },
+                      );
+                    }
+
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
                 )
               ];
             }
           ),
           const SizedBox(height: 16),
           TextField(
-            maxLength: 32,
+            maxLength: 8,
             keyboardType: TextInputType.text,
             decoration: CustomInputDecoration(
               context: context,
@@ -268,7 +330,7 @@ class Establishment extends StatelessWidget {
               prefixIcon: const Icon(Icons.key),
             ),
             onChanged: (value) {
-              ctrl.email.value = value;
+              ctrl.inviteKey.value = value;
             },
           )
         ],
