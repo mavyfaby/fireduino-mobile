@@ -37,8 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.5
   get: ^4.6.5
-  flutter_launcher_icons: ^0.13.0
   get_storage: ^2.1.1
+  flutter_native_splash: ^2.2.19
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +55,20 @@ flutter_icons:
   image_path: "assets/png/fireduino_icon.png"
   android: true
   ios: true
+
+flutter_native_splash:
+  color: "#fbf0f5"
+  color_dark: "#2b2121"
+  image: assets/png/fireduino_splash.png
+
+  android_12:
+    color: "#fbf0f5"
+    color_dark: "#2b2121"
+    image: assets/png/fireduino_splash.png
+
+  android: true
+  ios: true
+  fullscreen: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

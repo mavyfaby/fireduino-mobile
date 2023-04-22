@@ -191,8 +191,6 @@ class FireduinoAPI {
       // Set data
       setData(response);
 
-      print("Response: ${response.body}");
-
       // If the response is successful
       if (response.statusCode == 200) {
         // If not success

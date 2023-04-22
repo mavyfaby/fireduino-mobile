@@ -1,4 +1,4 @@
-package cloud.fireduino.fireduino
+package cloud.fireduino.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

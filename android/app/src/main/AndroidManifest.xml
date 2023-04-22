@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cloud.fireduino.fireduino">
+    package="cloud.fireduino.mobile">
    <application
         android:label="Fireduino"
         android:name="${applicationName}"
