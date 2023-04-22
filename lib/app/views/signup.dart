@@ -201,7 +201,7 @@ class CreateAccountPage extends StatelessWidget {
               // Check if account was created
               if (success) {
                 // Show success dialog
-                showAppDialog("Success", "Your account has been created successfully", actions: [
+                showAppDialog("Success", FireduinoAPI.message, actions: [
                   TextButton(
                     child: const Text("Go to login"),
                     onPressed: () {
@@ -214,10 +214,12 @@ class CreateAccountPage extends StatelessWidget {
                     },
                   ),
                 ]);
-              } else {
-                // Show error dialog
-                showAppDialog("Error", FireduinoAPI.message);
-              }
+
+                return;
+              } 
+
+              // Show error dialog
+              showAppDialog("Error", FireduinoAPI.message);
             }
           },
           onStepCancel: () {

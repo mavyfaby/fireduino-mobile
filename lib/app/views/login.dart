@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../store/store.dart';
+import '../models/user.dart';
+import '../network/request.dart';
+import '../utils/dialog.dart';
+import '../controllers/login.dart';
 import '../custom/decoration.dart';
 import '../env/config.dart';
 
@@ -13,6 +18,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginController = Get.find<LoginController>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -40,10 +47,12 @@ class LoginPage extends StatelessWidget {
                       context: context,
                       labelText: "Username or email",
                       prefixIcon: const Icon(Icons.person_outline_rounded),
-                    )
+                    ),
+                    onChanged: (value) {
+                      loginController.username.value = value;
+                    },
                   ),
                 ),
-                const SizedBox(height: 16),
                 SizedBox(
                   width: 300,
                   child: TextField(
@@ -52,20 +61,46 @@ class LoginPage extends StatelessWidget {
                       context: context,
                       labelText: "Password",
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
-                    )
+                    ),
+                    onChanged: (value) {
+                      loginController.password.value = value;
+                    },
                   ),
                 ),
-                const SizedBox(height: 32),
-
+                const SizedBox(height: 16),
                 SizedBox(
                   width: 300,
                   height: 50,
-                  child: FilledButton(
-                    onPressed: () {
+                  child: Obx(() => FilledButton(
+                    onPressed: loginController.username.value.isNotEmpty && loginController.password.value.isNotEmpty ? () async {
+                      // If username or password is empty, show error
+                      if (loginController.username.value.isEmpty || loginController.password.value.isEmpty) {
+                        showAppDialog("Error", "Please enter your username and password");
+                        return;
+                      }
+
+                      // Show loader
+                      showLoader("Logging in...");
+                      // Login user
+                      User? user = await FireduinoAPI.login(loginController.username.value, loginController.password.value);
+                      // Hide loader
+                      Get.back();
+
+                      // If user is null, show error
+                      if (user == null) {
+                        showAppDialog("Error", FireduinoAPI.message);
+                        return;
+                      }
+
+                      // Store token
+                      Store.set(StoreKeys.loginToken, FireduinoAPI.component);
+                      // Save user
+                      Store.set(StoreKeys.user, user.toJson());
+                      // Go to home page
                       Get.to(() => HomePage());
-                    },
+                    } : null,
                     child: const Text("Login")
-                  ),
+                  )),
                 ),
                 const SizedBox(height: 64),
               ],

@@ -1,8 +1,10 @@
 import 'dart:async';
-
-import 'package:fireduino/app/models/establishment.dart';
-import 'package:fireduino/app/network/endpoints.dart';
 import 'package:get/get.dart';
+
+import '../models/establishment.dart';
+import '../models/user.dart';
+
+import 'endpoints.dart';
 
 // GetConnect instance
 final _connect = GetConnect();
@@ -10,11 +12,13 @@ final _connect = GetConnect();
 /// This class contains all the API calls for the app
 class FireduinoAPI {
   // response data
+  static dynamic component;
   static dynamic message;
   static dynamic data;
 
   /// Set data
   static void setData(Response response) {
+    FireduinoAPI.component = response.body['component'];
     FireduinoAPI.message = response.body['message'];
     FireduinoAPI.data = response.body['data'];
   }
@@ -120,6 +124,34 @@ class FireduinoAPI {
       return false;
     } on TimeoutException {
       return false;
+    }
+  }
+
+  /// Logs in the user
+  static Future<User?> login(String username, String password) async {
+    // Declare form data
+    final formData = {
+      'user': username,
+      'pass': password,
+    };
+
+    try {
+      // Request login
+      Response response = await _connect.post(FireduinoEndpoints.login, formData, contentType: 'application/x-www-form-urlencoded');
+      // Set data
+      setData(response);
+
+      // If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) return null;
+        // Return status
+        return User.fromJson(response.body['data']);
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
     }
   }
 }

@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^2.0.5
   get: ^4.6.5
   flutter_launcher_icons: ^0.13.0
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:
