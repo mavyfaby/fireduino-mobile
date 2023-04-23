@@ -30,12 +30,22 @@ class User {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'eid': eid,
-    'username': username,
-    'firstName': firstName,
-    'lastName': lastName,
-    'email': email,
-    'createdAt': createdAt,
+    'a': id,
+    'b': eid,
+    'c': username,
+    'd': firstName,
+    'e': lastName,
+    'f': email,
+    'g': createdAt,
   };
+
+  /// Get fullname
+  String getFullname() {
+    return "$firstName $lastName";
+  }
+
+  /// Get email
+  String getEmail() {
+    return email;
+  }
 }

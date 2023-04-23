@@ -16,7 +16,7 @@ class Routes {
       GetPage(
         name: '/home',
         middlewares: [ SessionMiddleware() ],
-        page: () => HomePage()
+        page: () => const HomePage()
       ),
       GetPage(
         name: '/signup',

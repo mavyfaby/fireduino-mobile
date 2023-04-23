@@ -6,10 +6,10 @@ import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/signup.dart';
 
+import 'app/theme/helpers.dart';
 import 'app/routes/routes.dart';
 import 'app/store/auth.dart';
 import 'app/env/config.dart';
-import 'app/theme/theme.dart';
 
 void main() async {
   // Ensure that the binding is initialized
@@ -27,6 +27,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = getTheme(context);
+
     Get.put(HomeController());
     Get.put(LoginController());
     Get.put(CreateAccountController());
@@ -35,38 +37,8 @@ class MyApp extends StatelessWidget {
       title: appName,
       initialRoute: '/home',
       getPages: Routes.get(),
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: lightColorScheme,
-        scaffoldBackgroundColor: Color.alphaBlend(
-          lightColorScheme.primary.withOpacity(0.05),
-          lightColorScheme.surface
-        ),
-        appBarTheme: AppBarTheme(
-          elevation: 1,
-          titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-            color: lightColorScheme.onSurface,
-            fontWeight: FontWeight.w500,
-            fontFamily: "Poppins",
-          ),
-        ),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: darkColorScheme,
-        scaffoldBackgroundColor: Color.alphaBlend(
-          darkColorScheme.primary.withOpacity(0.05),
-          darkColorScheme.surface
-        ),
-        appBarTheme: AppBarTheme(
-          elevation: 1,
-          titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-            color: darkColorScheme.onSurface,
-            fontWeight: FontWeight.w500,
-            fontFamily: "Poppins",
-          ),
-        ),
-      )
+      theme: theme['light'],
+      darkTheme: theme['dark']
     );
   }
 }

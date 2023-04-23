@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../models/establishment.dart';
 import '../models/user.dart';
 
-import '../utils/base64.dart';
 import 'endpoints.dart';
 
 // GetConnect instance
@@ -163,7 +162,7 @@ class FireduinoAPI {
 
     try {
       // Request login with base64 encoded token
-      Response response = await _connect.post(tb64(FireduinoEndpoints.validateToken), { 'token': token, }, contentType: 'application/x-www-form-urlencoded');
+      Response response = await _connect.post(FireduinoEndpoints.validateToken, { 'token': token, }, contentType: 'application/x-www-form-urlencoded');
       // Set data
       setData(response);
 

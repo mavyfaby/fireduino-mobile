@@ -26,7 +26,7 @@ class FireduinoAuth {
       // If the user is not null
       if (user != null) {
         // Set the user
-        Store.set(StoreKeys.user, user);
+        Store.set(StoreKeys.user, user.toJson());
         return;
       }
 

@@ -97,7 +97,7 @@ class LoginPage extends StatelessWidget {
                       // Save user
                       Store.set(StoreKeys.user, user.toJson());
                       // Go to home page
-                      Get.to(() => HomePage());
+                      Get.to(() => const HomePage());
                     } : null,
                     child: const Text("Login")
                   )),
