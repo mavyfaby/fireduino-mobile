@@ -108,7 +108,7 @@ class HomePage extends StatelessWidget {
     
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-
+          Get.toNamed('/add');
         },
         elevation: 0,
         icon: const Icon(Icons.add),

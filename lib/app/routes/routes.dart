@@ -1,3 +1,4 @@
+import 'package:fireduino/app/views/add.dart';
 import 'package:get/get.dart';
 
 import '../views/home.dart';
@@ -17,6 +18,10 @@ class Routes {
         name: '/home',
         middlewares: [ SessionMiddleware() ],
         page: () => const HomePage()
+      ),
+      GetPage(
+        name: '/add',
+        page: () => const AddFireduinoPage()
       ),
       GetPage(
         name: '/signup',
