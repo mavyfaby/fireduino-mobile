@@ -6,6 +6,8 @@ import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/signup.dart';
 
+import 'app/store/global.dart';
+import 'app/network/socket.dart';
 import 'app/theme/helpers.dart';
 import 'app/routes/routes.dart';
 import 'app/store/auth.dart';
@@ -18,6 +20,10 @@ void main() async {
   await GetStorage.init();
   // Initialize the auth store
   await FireduinoAuth.init();
+  // Get platform information
+  await Global.initDeviceInfo();
+  // Connect to the socket server
+  FireduinoSocket.instance.connect();
   // Run the app
   runApp(const MyApp());
 }

@@ -1,4 +1,10 @@
+import 'package:fireduino/app/network/socket.dart';
+import 'package:fireduino/app/utils/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
+
+import '../custom/decoration.dart';
 
 class AddFireduinoPage extends StatelessWidget {
   const AddFireduinoPage({super.key});
@@ -19,10 +25,10 @@ class AddFireduinoPage extends StatelessWidget {
             const SizedBox(height: 16),
             TextField(
               controller: serialId,
-              decoration: const InputDecoration(
-                label: Text("Fireduino Serial ID"),
-                filled: true,
-                prefixIcon: Icon(Icons.fireplace_outlined)
+              decoration: CustomInputDecoration(
+                context: context,
+                labelText: "Fireduino Serial ID",
+                prefixIcon: const Icon(Icons.fireplace_outlined)
               ),
             ),
             const SizedBox(height: 16),
@@ -31,7 +37,28 @@ class AddFireduinoPage extends StatelessWidget {
               children: [
                 FilledButton.tonal(
                   onPressed: () {
-                    
+                    // Show the loading dialog
+                    showLoader("Checking fireduino...");
+                    // Check the fireduino device
+                    FireduinoSocket.instance.checkFireduino(serialId.text, (isAvailable) {
+                      // Hide the loading dialog
+                      Get.back();
+
+                      if (isAvailable == null) {
+                        // Show the error dialog
+                        showAppDialog("Error", "Server not available.");
+                        return;
+                      }
+
+                      // Check if the device is connected
+                      if (isAvailable) {
+                        // Show the success dialog
+                        showAppDialog("Success", "Fireduino is connected to the server.");
+                      } else {
+                        // Show the error dialog
+                        showAppDialog("Error", "Fireduino is not connected to the server.");
+                      }
+                    });
                   },
                   child: const Text("Check device")
                 ),

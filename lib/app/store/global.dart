@@ -1,3 +1,5 @@
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -5,6 +7,14 @@ import 'store.dart';
 
 class Global {
   static User get user => User.fromJson(Store.get(StoreKeys.user));
+  static String deviceId = "";
+
+  static initDeviceInfo() async {
+    // Get the device model
+    deviceId = (await DeviceInfoPlugin().deviceInfo).data["model"];
+    // Concatenate the device model with the device id
+    deviceId = "$deviceId-${await PlatformDeviceId.getDeviceId}";
+  }
 
   static List<Map<String, dynamic>> get drawerItems => [
     {
