@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
-import 'package:fireduino/app/store/global.dart';
+import '../store/global.dart';
 
 class FireduinoSocket {
   /// The host of the socket server
-  static const String _host = 'http://192.168.1.145:5000';
+  static const String _host = kReleaseMode ? 'https://fireduino-ws.azurewebsites.net' : 'http://192.168.1.145:5000';
   /// The socket instance
   static FireduinoSocket? _instance;
   /// The socket instance

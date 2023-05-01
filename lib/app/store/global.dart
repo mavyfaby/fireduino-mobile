@@ -13,7 +13,7 @@ class Global {
     // Get the device model
     deviceId = (await DeviceInfoPlugin().deviceInfo).data["model"];
     // Concatenate the device model with the device id
-    deviceId = "$deviceId-${await PlatformDeviceId.getDeviceId}";
+    deviceId = "$deviceId(${await PlatformDeviceId.getDeviceId})";
   }
 
   static List<Map<String, dynamic>> get drawerItems => [

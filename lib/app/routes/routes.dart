@@ -1,6 +1,6 @@
-import 'package:fireduino/app/views/add.dart';
 import 'package:get/get.dart';
 
+import '../views/add.dart';
 import '../views/home.dart';
 import '../views/login.dart';
 import '../views/signup.dart';
