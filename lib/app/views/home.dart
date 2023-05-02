@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
-    final PageController pageController = PageController(initialPage: 1);
+    final PageController pageController = PageController(initialPage: homeController.pageIndex.value);
 
     return Scaffold(
       key: drawerKey,

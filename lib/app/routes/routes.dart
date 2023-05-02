@@ -5,6 +5,8 @@ import '../views/home.dart';
 import '../views/login.dart';
 import '../views/signup.dart';
 
+import '../views/fireduinos/fireduino/fireduino.dart';
+
 import 'middlewares.dart';
 
 class Routes {
@@ -27,6 +29,10 @@ class Routes {
         name: '/signup',
         page: () => const CreateAccountPage()
       ),
+      GetPage(
+        name: '/fireduino',
+        page: () => const FireduinoPage()
+      )
     ];
   }
 }
