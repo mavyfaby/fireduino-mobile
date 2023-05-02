@@ -1,3 +1,5 @@
+import 'package:fireduino/app/network/request.dart';
+import 'package:fireduino/app/store/global.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +13,8 @@ class AddFireduinoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController serialId = TextEditingController();
+    final TextEditingController name = TextEditingController();
+    final RxString nameErrorText = "".obs;
     final RxString errorText = "".obs;
 
     return Scaffold(
@@ -24,11 +28,23 @@ class AddFireduinoPage extends StatelessWidget {
             const Text("Note: Make sure the fireduino device is connected to the server."),
             const SizedBox(height: 16),
             Obx(() => TextField(
+              controller: name,
+              decoration: CustomInputDecoration(
+                context: context,
+                labelText: "Name",
+                prefixIcon: const Icon(Icons.fireplace_outlined),
+                errorText: nameErrorText.value.isEmpty ? null : nameErrorText.value,
+              ),
+            )),
+            Obx(() => SizedBox(
+              height: nameErrorText.value.isEmpty ? 0 : 16,
+            )),
+            Obx(() => TextField(
               controller: serialId,
               decoration: CustomInputDecoration(
                 context: context,
-                labelText: "Fireduino Serial ID",
-                prefixIcon: const Icon(Icons.fireplace_outlined),
+                labelText: "Serial ID",
+                prefixIcon: const Icon(Icons.key),
                 errorText: errorText.value.isEmpty ? null : errorText.value,
               ),
             )),
@@ -57,14 +73,41 @@ class AddFireduinoPage extends StatelessWidget {
                   onPressed: () {
                     // Reset the error text
                     errorText.value = "";
+                    nameErrorText.value = "";
                     // Check the serial id
-                    checkSerial(serialId.text, true, (isAvailable) {
+                    checkSerial(serialId.text, true, (isAvailable) async {
+                      // Check if the server is available
                       if (isAvailable == null) {
                         return;
                       }
 
+                      // If name is empty
+                      if (name.text.isEmpty) {
+                        // Set the error text
+                        nameErrorText.value = "Oops! The name you entered is empty.";
+                        return;
+                      }
+                      
+                      // Check if the device is available
                       if (isAvailable) {
-                        // TODO: Add the device
+                        // Show the loading dialog
+                        showLoader("Adding fireduino device...");
+
+                        // Add the fireduino device
+                        if (await FireduinoAPI.addFireduino(Global.user.eid!, serialId.text, name.text)) {
+                          // Hide the loading dialog
+                          Get.back();
+                          // If success, show dialog
+                          await showAppDialog("Success", "Fireduino device ${name.text} added successfully to your establishment!");
+                          // Pop the page
+                          Get.back();
+                          return;
+                        }
+
+                        // Hide the loading dialog
+                        Get.back();
+                        // Show the error dialog
+                        showAppDialog("Error", FireduinoAPI.message);
                         return;
                       }
 
@@ -87,7 +130,7 @@ class AddFireduinoPage extends StatelessWidget {
     // Show the loading dialog
     showLoader("Checking fireduino...");
     // Check the fireduino device
-    FireduinoSocket.instance.checkFireduino(serialId, (isAvailable) {
+    FireduinoSocket.instance.checkFireduino(serialId, (isAvailable) async {
       // Hide the loading dialog
       Get.back();
 
@@ -101,7 +144,7 @@ class AddFireduinoPage extends StatelessWidget {
       // Check if the device is available and is not from the add button
       if (isAvailable && !isAdd) {
         // Show the snackbar
-        showAppDialog("Success", "The Serial ID you entered is available.");
+        await showAppDialog("Success", "The Serial ID you entered is available.");
       }
 
       // Check if the device is connected

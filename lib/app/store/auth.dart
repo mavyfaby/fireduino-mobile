@@ -21,7 +21,7 @@ class FireduinoAuth {
     // If the user authenticated
     if (isAuthenticated.value) {
       // refresh user by getting the user from the server by token
-      User? user = await FireduinoAPI.getUserByToken(token);
+      UserModel? user = await FireduinoAPI.getUserByToken(token);
 
       // If the user is not null
       if (user != null) {

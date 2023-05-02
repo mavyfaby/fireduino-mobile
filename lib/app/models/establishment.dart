@@ -2,8 +2,9 @@ class EstablishmentModel {
   final int? id;
   final String? name;
   final String? address;
+  final String? latitude;
+  final String? longitude;
   final String? phone;
-  final String? email;
   final String? inviteKey;
   final String? createdAt;
 
@@ -11,8 +12,9 @@ class EstablishmentModel {
     this.id,
     this.name,
     this.address,
+    this.latitude,
+    this.longitude,
     this.phone,
-    this.email,
     this.inviteKey,
     this.createdAt,
   });
@@ -22,10 +24,22 @@ class EstablishmentModel {
       id: json['a'],
       inviteKey: json['b'],
       name: json['c'],
-      address: json['e'],
       phone: json['d'],
-      createdAt: json['f'],
-      // email: json['email'],
+      address: json['e'],
+      latitude: json['f'],
+      longitude: json['g'],
+      createdAt: json['h'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'a': id,
+    'b': inviteKey,
+    'c': name,
+    'd': phone,
+    'e': address,
+    'f': latitude,
+    'g': longitude,
+    'h': createdAt,
+  };
 }

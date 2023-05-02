@@ -6,7 +6,8 @@ import '../models/user.dart';
 import 'store.dart';
 
 class Global {
-  static User get user => User.fromJson(Store.get(StoreKeys.user));
+  static UserModel get user => UserModel.fromJson(Store.get(StoreKeys.user));
+  static String get token => Store.get(StoreKeys.loginToken);
   static String deviceId = "";
 
   static initDeviceInfo() async {

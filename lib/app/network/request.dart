@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 
+import '../store/global.dart';
 import '../models/establishment.dart';
 import '../models/user.dart';
 
@@ -128,7 +129,7 @@ class FireduinoAPI {
   }
 
   /// Logs in the user
-  static Future<User?> login(String username, String password) async {
+  static Future<UserModel?> login(String username, String password) async {
     // Declare form data
     final formData = {
       'user': username,
@@ -146,7 +147,7 @@ class FireduinoAPI {
         // If not success
         if (!response.body['success']) return null;
         // Return status
-        return User.fromJson(response.body['data']);
+        return UserModel.fromJson(response.body['data']);
       }
 
       return null;
@@ -181,7 +182,7 @@ class FireduinoAPI {
   }
 
   /// Gets the user by token
-  static Future<User?> getUserByToken(String? token) async {
+  static Future<UserModel?> getUserByToken(String? token) async {
     // If token is null
     if (token == null) return null;
 
@@ -196,7 +197,7 @@ class FireduinoAPI {
         // If not success
         if (!response.body['success']) return null;
         // Return status
-        return User.fromJson(response.body['data']);
+        return UserModel.fromJson(response.body['data']);
       }
 
       return null;
@@ -204,4 +205,36 @@ class FireduinoAPI {
       return null;
     }
   }
+
+  /// Add fireduino
+  static Future<bool> addFireduino(int estbID, String serialID, String name) async {
+    try {
+      // Declare form data
+      final formData = {
+        'estbID': estbID,
+        'serialID': serialID,
+        'name': name,
+      };
+
+      /// Get the config from the server.
+      Response response = await _connect.post(FireduinoEndpoints.fireduino, formData,
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        }
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }   
 }

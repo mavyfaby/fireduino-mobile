@@ -82,7 +82,7 @@ class LoginPage extends StatelessWidget {
                       // Show loader
                       showLoader("Logging in...");
                       // Login user
-                      User? user = await FireduinoAPI.login(loginController.username.value, loginController.password.value);
+                      UserModel? user = await FireduinoAPI.login(loginController.username.value, loginController.password.value);
                       // Hide loader
                       Get.back();
 
