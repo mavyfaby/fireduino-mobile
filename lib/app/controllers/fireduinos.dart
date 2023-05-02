@@ -1,6 +1,6 @@
-import 'package:fireduino/app/models/fireduino.dart';
 import 'package:get/get.dart';
 
+import '../models/fireduino.dart';
 import '../network/request.dart';
 
 class FireduinosController extends GetxController {

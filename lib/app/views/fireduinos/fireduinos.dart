@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../controllers/fireduinos.dart';
 import '../../models/fireduino.dart';
 import '../../network/request.dart';
+import '../../store/global.dart';
 import '../../utils/dialog.dart';
 import '../../widgets/tile.dart';
 
@@ -47,11 +48,12 @@ class FireduinosPage extends StatelessWidget {
                       crossAxisSpacing: 4,
                       itemCount: Get.find<FireduinosController>().count,
                       itemBuilder: (context, index) {
-                        return FireduinoTile(
+                        return Obx(() => FireduinoTile(
                           name: Get.find<FireduinosController>().devices[index].name,
                           serialId: Get.find<FireduinosController>().devices[index].serialId,
+                          isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.find<FireduinosController>().devices[index].serialId) >= 0,
                           index: index + 1,
-                        );
+                        ));
                       },
                     ),
                   )

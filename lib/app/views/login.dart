@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../network/socket.dart';
 import '../store/store.dart';
 import '../models/user.dart';
 import '../network/request.dart';
@@ -96,6 +97,8 @@ class LoginPage extends StatelessWidget {
                       Store.set(StoreKeys.loginToken, FireduinoAPI.component);
                       // Save user
                       Store.set(StoreKeys.user, user.toJson());
+                      // Connect to the socket server
+                      FireduinoSocket.instance.connect();
                       // Go to home page
                       Get.to(() => const HomePage());
                     } : null,

@@ -26,6 +26,13 @@ class FireduinoSocket {
       return;
     }
 
+    // If token is null
+    if (Global.token == null) {
+      // Log that we are not connected
+      print('Login token is null. Not connecting to socket server at $_host');
+      return;
+    }
+
     // Log that we are connecting
     print('Connecting to socket server at $_host');
 
@@ -40,6 +47,8 @@ class FireduinoSocket {
       print('Connected to socket server at $_host');
       // Emit the platform information
       socket!.emit('mobile', Global.deviceId);
+      // Emit get online fireduino devices
+      socket!.emit('get_online_fireduinos');
     });
 
     /// Listen for the disconnect event
@@ -48,21 +57,22 @@ class FireduinoSocket {
       print('Disconnected from socket server at $_host');
     });
 
+    /// Listen for `get_online_fireduinos` event
+    /// This event is emitted when the socket server requests for online fireduino devices
+    socket!.on("get_online_fireduinos", (data) {
+      // Log that we are getting online fireduino devices
+      print('get_online_fireduinos: $data');
+      // Set the online fireduino devices
+      setOnlineFireduinos(data);
+    });
+
     /// Listen for `fireduino_connect` event
     /// This event is emitted when a fireduino device is online or not
     socket!.on('fireduino_connect', (data) {
       // Log that a fireduino device is connected
       print('fireduino_connect: $data');
-      // List of devices
-      List<Map<String, dynamic>> devices = [];
-
-      // Convert List<dynamic> data into List<Map<String, dynamic>>
-      for (final item in data) {
-        devices.add(item);
-      }
-
-      // Populate the online fireduino devices
-      Global.onlineFireduinos.value = devices;
+      // Set the online fireduino devices
+      setOnlineFireduinos(data);
     });
 
     /// Listen for `fireduino_disconnect` event
@@ -70,16 +80,8 @@ class FireduinoSocket {
     socket!.on('fireduino_disconnect', (data) {
       // Log that a fireduino device has been disconnected
       print('fireduino_disconnect: $data');
-      // List of devices
-      List<Map<String, dynamic>> devices = [];
-
-      // Convert List<dynamic> data into List<Map<String, dynamic>>
-      for (final item in data) {
-        devices.add(item);
-      }
-
-      // Populate the online fireduino devices
-      Global.onlineFireduinos.value = devices;
+      // Set the online fireduino devices
+      setOnlineFireduinos(data);
     });
   }
 
@@ -105,13 +107,29 @@ class FireduinoSocket {
     print("Checking fireduino device with serial ID: $serialId");
 
     // Off the fireduino-check event
-    socket!.off('fireduino-check');
+    socket!.off('fireduino_check');
     // Emit the fireduino-check event
-    socket!.emit('fireduino-check', serialId);
+    socket!.emit('fireduino_check', serialId);
     // Listen for the fireduino-check event
-    socket!.on('fireduino-check', (data) {
+    socket!.on('fireduino_check', (data) {
       // Call the callback function
       callback(data);
     });
+  }
+
+  /// Set online fireduino devices
+  void setOnlineFireduinos(List<dynamic> data) {
+    // List of devices
+    List<Map<String, dynamic>> devices = [];
+
+    // Convert List<dynamic> data into List<Map<String, dynamic>>
+    for (final item in data) {
+      devices.add(item);
+    }
+
+    // Populate the online fireduino devices
+    Global.onlineFireduinos.value = devices;
+    // Update list
+    Global.onlineFireduinos.refresh();
   }
 }

@@ -1,8 +1,8 @@
-import 'package:fireduino/app/network/request.dart';
-import 'package:fireduino/app/store/global.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../network/request.dart';
+import '../store/global.dart';
 import '../network/socket.dart';
 import '../utils/dialog.dart';
 import '../custom/decoration.dart';

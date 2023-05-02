@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../store/global.dart';
-
 class FireduinoTile extends StatelessWidget {
   const FireduinoTile({
     required this.index,
     required this.name,
     required this.serialId,
+    required this.isOnline,
     super.key
   });
 
   final int index;
   final String name;
   final String serialId;
+  final bool isOnline;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +51,12 @@ class FireduinoTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Obx(() => Container(
+                    Container(
                       width: 16,
                       height: 16,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.parameters['serialId']) >= 0 ?
+                        color: isOnline ?
                           Get.theme.brightness == Brightness.light ?
                             Colors.teal.shade600 :
                             Colors.teal.shade300 :
@@ -64,7 +64,7 @@ class FireduinoTile extends StatelessWidget {
                             Colors.red.shade600 :
                             Colors.red.shade300,
                       ),
-                    ))
+                    )
                   ],
                 )
               )
