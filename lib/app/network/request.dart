@@ -20,6 +20,14 @@ class FireduinoAPI {
 
   /// Set data
   static void setData(Response response) {
+    // If response.body is null
+    if (response.body == null) {
+      FireduinoAPI.component = 'error';
+      FireduinoAPI.message = 'No response from server';
+      FireduinoAPI.data = null;
+      return;
+    }
+
     FireduinoAPI.component = response.body['component'];
     FireduinoAPI.message = response.body['message'];
     FireduinoAPI.data = response.body['data'];

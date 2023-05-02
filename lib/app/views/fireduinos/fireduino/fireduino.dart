@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../store/global.dart';
 import '../../../widgets/status.dart';
 
 class FireduinoPage extends StatelessWidget {
@@ -45,7 +46,7 @@ class FireduinoPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 64),
-              const FireduinoStatus(isOnline: true),
+              Obx(() => FireduinoStatus(isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.parameters['serialId']) >= 0)),
               const SizedBox(height: 64),
               GestureDetector(
                 onTapDown: (TapDownDetails details) {

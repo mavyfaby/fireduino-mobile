@@ -29,11 +29,10 @@ class FireduinoSocket {
     // Log that we are connecting
     print('Connecting to socket server at $_host');
 
-    /// Connect to the socket server
-    socket = io(_host, <String, dynamic>{
+    /// Connect to the socket server with the namespace (Specific to the establishment)
+    socket = io("$_host/estb${Global.user.eid}", <String, dynamic>{
       'transports': ['websocket'],
-      'autoConnect': false,
-    }).connect();
+    });
 
     /// Listen for the connection event
     socket!.on("connect", (data) {
@@ -47,6 +46,40 @@ class FireduinoSocket {
     socket!.on("disconnect", (data) {
       // Log that we are disconnected
       print('Disconnected from socket server at $_host');
+    });
+
+    /// Listen for `fireduino_connect` event
+    /// This event is emitted when a fireduino device is online or not
+    socket!.on('fireduino_connect', (data) {
+      // Log that a fireduino device is connected
+      print('fireduino_connect: $data');
+      // List of devices
+      List<Map<String, dynamic>> devices = [];
+
+      // Convert List<dynamic> data into List<Map<String, dynamic>>
+      for (final item in data) {
+        devices.add(item);
+      }
+
+      // Populate the online fireduino devices
+      Global.onlineFireduinos.value = devices;
+    });
+
+    /// Listen for `fireduino_disconnect` event
+    /// This event is emitted when a fireduino device is disconnected
+    socket!.on('fireduino_disconnect', (data) {
+      // Log that a fireduino device has been disconnected
+      print('fireduino_disconnect: $data');
+      // List of devices
+      List<Map<String, dynamic>> devices = [];
+
+      // Convert List<dynamic> data into List<Map<String, dynamic>>
+      for (final item in data) {
+        devices.add(item);
+      }
+
+      // Populate the online fireduino devices
+      Global.onlineFireduinos.value = devices;
     });
   }
 

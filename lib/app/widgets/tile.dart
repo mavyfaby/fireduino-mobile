@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../store/global.dart';
+
 class FireduinoTile extends StatelessWidget {
   const FireduinoTile({
     required this.index,
@@ -35,17 +37,36 @@ class FireduinoTile extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurfaceVariant
               )),
               const SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(name, style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant
+                  )),
+                  const SizedBox(height: 4),
+                  Text(serialId.toString(), style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(name, style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant
-                    )),
-                    const SizedBox(height: 4),
-                    Text(serialId.toString(), style: Theme.of(context).textTheme.bodySmall),
+                    Obx(() => Container(
+                      width: 16,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.parameters['serialId']) >= 0 ?
+                          Get.theme.brightness == Brightness.light ?
+                            Colors.teal.shade600 :
+                            Colors.teal.shade300 :
+                          Get.theme.brightness == Brightness.light ?
+                            Colors.red.shade600 :
+                            Colors.red.shade300,
+                      ),
+                    ))
                   ],
-                ),
+                )
               )
             ],
           ),

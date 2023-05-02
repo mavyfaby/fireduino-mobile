@@ -1,6 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../models/user.dart';
 import 'store.dart';
@@ -16,6 +17,8 @@ class Global {
     // Concatenate the device model with the device id
     deviceId = "$deviceId(${await PlatformDeviceId.getDeviceId})";
   }
+
+  static RxList<Map<String, dynamic>> onlineFireduinos = RxList.empty();
 
   static List<Map<String, dynamic>> get drawerItems => [
     {
