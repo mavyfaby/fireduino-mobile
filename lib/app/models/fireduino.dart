@@ -1,23 +1,35 @@
-import './establishment.dart';
-
 class FireduinoModel {
+  final int id;
   final String serialId;
-  final EstablishmentModel estb;
+  final int estbID;
+  final String name;
+  final DateTime createdAt;
 
   FireduinoModel({
+    required this.id,
     required this.serialId,
-    required this.estb,
+    required this.estbID,
+    required this.name,
+    required this.createdAt,
   });
 
   factory FireduinoModel.fromJson(Map<String, dynamic> json) {
     return FireduinoModel(
-      serialId: json['serialId'],
-      estb: EstablishmentModel.fromJson(json['estb']),
+      id: json['a'],
+      serialId: json['b'],
+      estbID: json['c'],
+      name: json['d'],
+      createdAt: DateTime.parse(json['e']),
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'serialId': serialId,
-    'estb': estb.toJson(),
-  };
+  Map<String, dynamic> toJson() {
+    return {
+      'a': id,
+      'b': serialId,
+      'c': estbID,
+      'd': name,
+      'e': createdAt.toIso8601String(),
+    };
+  }
 }

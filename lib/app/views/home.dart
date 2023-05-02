@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
-    final PageController pageController = PageController();
+    final PageController pageController = PageController(initialPage: 1);
 
     return Scaffold(
       key: drawerKey,
@@ -97,6 +97,7 @@ class HomePage extends StatelessWidget {
     
       body: PageView(
         controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: (value) {
           homeController.pageIndex.value = value;
         },

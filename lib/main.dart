@@ -2,6 +2,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/app/controllers/fireduinos.dart';
 import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/signup.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
     Get.put(HomeController());
     Get.put(LoginController());
     Get.put(CreateAccountController());
+    Get.put(FireduinosController());
 
     return GetMaterialApp(
       title: appName,
