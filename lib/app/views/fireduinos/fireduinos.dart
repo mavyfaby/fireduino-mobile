@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/fireduinos.dart';
-import '../../models/fireduino.dart';
-import '../../network/request.dart';
 import '../../store/global.dart';
-import '../../utils/dialog.dart';
 import '../../widgets/tile.dart';
 
 class FireduinosPage extends StatelessWidget {
@@ -14,19 +11,18 @@ class FireduinosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: fetchFireduinos(),
+    return  FutureBuilder(
+      future: Get.find<FireduinosController>().fetchFireduinos(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           // If has error
           if (snapshot.hasError) {
             return const Center(child: Text("An error has occured!"));
           }
-
           // If successful
           return RefreshIndicator(
             onRefresh: () async {
-              await fetchFireduinos();
+              await Get.find<FireduinosController>().fetchFireduinos();
             },
             triggerMode: RefreshIndicatorTriggerMode.anywhere,
             child: Padding(
@@ -66,17 +62,5 @@ class FireduinosPage extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       },
     );
-  }
-
-  Future<void> fetchFireduinos() async {
-    List<FireduinoModel>? devices = await FireduinoAPI.fetchFireduinos();
-
-    if (devices == null) {
-      showAppDialog("Error", FireduinoAPI.message);
-      return;
-    }
-
-    print("Fireduinos fetched successfully");
-    Get.find<FireduinosController>().devices.value = devices;
   }
 }

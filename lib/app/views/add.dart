@@ -101,6 +101,9 @@ class AddFireduinoPage extends StatelessWidget {
                           await showAppDialog("Success", "Fireduino device ${name.text} added successfully to your establishment!");
                           // Pop the page
                           Get.back();
+                          // Force update
+                          Get.forceAppUpdate();
+                          // Return
                           return;
                         }
 
