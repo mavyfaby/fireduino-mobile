@@ -103,7 +103,7 @@ class LoginPage extends StatelessWidget {
                       // Connect to the socket server
                       FireduinoSocket.instance.connect();
                       // Go to home page
-                      Get.toNamed("/main");
+                      Get.offAllNamed("/main");
                     } : null,
                     child: const Text("Login")
                   )),
