@@ -12,7 +12,7 @@ class SessionMiddleware extends GetMiddleware {
   @override // page called
   GetPage? onPageCalled(GetPage? page) {
     // If page is login and the token is revoked, show an error dialog
-    if (page?.name == "/home" && FireduinoAuth.isRevoked.value) {
+    if (page?.name == "/main" && FireduinoAuth.isRevoked.value) {
       // Show an error dialog
       Timer.run(() {
         showAppDialog("Session Error", "An error occured while validating your session. Please login again.");

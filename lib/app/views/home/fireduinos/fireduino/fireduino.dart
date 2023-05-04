@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../store/global.dart';
-import '../../../widgets/status.dart';
+import '../../../../store/global.dart';
+import '../../../../widgets/status.dart';
 
 class FireduinoPage extends StatelessWidget {
   const FireduinoPage({super.key});

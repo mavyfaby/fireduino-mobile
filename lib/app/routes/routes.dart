@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
 import '../views/add.dart';
-import '../views/home.dart';
 import '../views/login.dart';
+import '../views/main.dart';
 import '../views/signup.dart';
 
-import '../views/fireduinos/fireduino/fireduino.dart';
+import '../views/home/fireduinos/fireduino/fireduino.dart';
 
 import 'middlewares.dart';
 
@@ -17,9 +17,9 @@ class Routes {
         page: () => const LoginPage()
       ),
       GetPage(
-        name: '/home',
+        name: '/main',
         middlewares: [ SessionMiddleware() ],
-        page: () => const HomePage()
+        page: () => const MainPage()
       ),
       GetPage(
         name: '/add',
@@ -32,7 +32,7 @@ class Routes {
       GetPage(
         name: '/fireduino',
         page: () => const FireduinoPage()
-      )
+      ),
     ];
   }
 }

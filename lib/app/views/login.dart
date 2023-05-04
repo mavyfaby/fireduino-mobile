@@ -11,7 +11,6 @@ import '../controllers/login.dart';
 import '../custom/decoration.dart';
 import '../env/config.dart';
 
-import 'home.dart';
 import 'signup.dart';
 
 class LoginPage extends StatelessWidget {
@@ -100,7 +99,7 @@ class LoginPage extends StatelessWidget {
                       // Connect to the socket server
                       FireduinoSocket.instance.connect();
                       // Go to home page
-                      Get.to(() => const HomePage());
+                      Get.toNamed("/main");
                     } : null,
                     child: const Text("Login")
                   )),

@@ -2,9 +2,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/app/controllers/fireduinos.dart';
+import 'app/controllers/fireduinos.dart';
 import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
+import 'app/controllers/main.dart';
 import 'app/controllers/signup.dart';
 
 import 'app/store/global.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = getTheme(context);
 
+    Get.put(MainController());
     Get.put(HomeController());
     Get.put(LoginController());
     Get.put(CreateAccountController());
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: appName,
-      initialRoute: '/home',
+      initialRoute: '/main',
       getPages: Routes.get(),
       theme: theme['light'],
       darkTheme: theme['dark']

@@ -22,8 +22,14 @@ class Global {
 
   static List<Map<String, dynamic>> get drawerItems => [
     {
+      'title': 'Home',
+      'route': '/home',
+      'icon':  Icons.house_outlined,
+      'sicon': Icons.house_rounded,
+    },
+    {
       'title': 'Fire Departments',
-      'route': '/fire-departments',
+      'route': '/departments',
       'icon':  Icons.fire_truck_outlined,
       'sicon': Icons.fire_truck_rounded,
     },
@@ -56,6 +62,6 @@ class Global {
       'route': '/sms-history',
       'icon':  Icons.sms_outlined,
       'sicon': Icons.sms,
-    },
+    }
   ];
 }
