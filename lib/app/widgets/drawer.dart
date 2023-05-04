@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../controllers/main.dart';
 import '../env/config.dart';
 import '../store/global.dart';
+import '../utils/dialog.dart';
 
 class FireduinoDrawer extends StatelessWidget {
   const FireduinoDrawer({ required this.onSelect, super.key});
@@ -23,6 +24,7 @@ class FireduinoDrawer extends StatelessWidget {
 
             // If logout
             if (index == 8) {
+              confirmLogout();
               return;
             }
 
@@ -83,6 +85,26 @@ class FireduinoDrawer extends StatelessWidget {
           ]
         ),
       ))
+    );
+  }
+
+  void confirmLogout() {
+    showAppDialog("Logout", "Are you sure you want to logout?",
+      actions: [
+        TextButton(
+          child: const Text("Cancel"),
+          onPressed: () {
+            Get.back();
+          }
+        ),
+        TextButton(
+          child: const Text("Logout"),
+          onPressed: () {
+            Get.back();
+            Get.find<MainController>().logout();
+          }
+        )
+      ]
     );
   }
 }
