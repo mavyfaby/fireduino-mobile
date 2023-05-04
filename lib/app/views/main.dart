@@ -20,13 +20,21 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
-
     final mainController = Get.find<MainController>();
     final homeController = Get.find<HomeController>();
-    
-    final PageController mainPageController = PageController();
-    final PageController homePageController = PageController(initialPage: homeController.pageIndex.value);
+
+    final GlobalKey<ScaffoldState> drawerKey = GlobalKey();
+
+    final pages = [
+      const HomePage(),
+      const FireDepartmentsView(),
+      const IncidentReportsView(),
+      const AccessLogsView(),
+      const EditHistoryView(),
+      const LoginHistoryView(),
+      const SMSHistoryView(),
+      const PreferencesView()
+    ];
 
     return WillPopScope(
       onWillPop: () async {
@@ -35,11 +43,7 @@ class MainPage extends StatelessWidget {
         }
         
         mainController.pageStack.removeLast();
-        mainPageController.animateToPage(
-          mainController.pageStack.last,
-          duration: const Duration(milliseconds: 210),
-          curve: Curves.easeInOut
-        );
+        mainController.pageIndex.value = mainController.pageStack.last;
 
         return false;
       },
@@ -53,45 +57,29 @@ class MainPage extends StatelessWidget {
             icon: const Icon(Icons.menu),
           ),
           title: Obx(() => Text(
-            mainController.pageIndex.value >= Global.drawerItems.length ?
-              "Preferences" :
-              Global.drawerItems[mainController.pageIndex.value]["title"],
+            mainController.pageIndex.value == 0 ?
+              homeController.pageIndex.value == 0 ?
+                "Dashboard" :
+                "Fireduinos" : 
+              mainController.pageIndex.value >= Global.drawerItems.length ?
+                "Preferences" :
+                Global.drawerItems[mainController.pageIndex.value]["title"],
           )),
         ),
     
         drawer: FireduinoDrawer(
           onSelect: (index) {
+            homeController.pageIndex.value = 0;
             mainController.pageStack.add(index);
             mainController.pageIndex.value = index;
-            mainPageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 210),
-              curve: Curves.easeInOut
-            );
           },
         ),
-        
-        body: PageView(
-          controller: mainPageController,
-          physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (value) {
-            mainController.pageIndex.value = value;
-          },
-          children: [
-            HomePage(pageController: homePageController),
-            const FireDepartmentsView(),
-            const IncidentReportsView(),
-            const AccessLogsView(),
-            const EditHistoryView(),
-            const LoginHistoryView(),
-            const SMSHistoryView(),
-            const PreferencesView()
-          ],
-        ),
+      
+        body: Obx(() => pages[mainController.pageIndex.value]),
       
         floatingActionButton: Obx(() => AnimatedSlide(
           offset: Offset(0, mainController.pageIndex.value == 0 ? 0 : 100),
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(seconds: 0),
           child: FloatingActionButton.extended(
             onPressed: () {
               Get.toNamed('/add');
@@ -106,7 +94,7 @@ class MainPage extends StatelessWidget {
       
         bottomNavigationBar: Obx(() => AnimatedSlide(
           offset: Offset(0, mainController.pageIndex.value == 0 ? 0 : 100),
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(seconds: 0),
           child: BottomAppBar(
             elevation: 1,
             child: Obx(() => Row(
@@ -115,7 +103,7 @@ class MainPage extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     homeController.pageIndex.value = 0;
-                    homePageController.animateToPage(0,
+                    homeController.pageController.animateToPage(0,
                       duration: const Duration(milliseconds: 210),
                       curve: Curves.easeInOut
                     );
@@ -128,7 +116,7 @@ class MainPage extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     homeController.pageIndex.value = 1;
-                    homePageController.animateToPage(1,
+                    homeController.pageController.animateToPage(1,
                       duration: const Duration(milliseconds: 210),
                       curve: Curves.easeInOut
                     );

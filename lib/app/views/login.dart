@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../network/socket.dart';
+import '../store/auth.dart';
 import '../store/store.dart';
 import '../models/user.dart';
 import '../network/request.dart';
@@ -83,11 +84,12 @@ class LoginPage extends StatelessWidget {
                       showLoader("Logging in...");
                       // Login user
                       UserModel? user = await FireduinoAPI.login(loginController.username.value, loginController.password.value);
-                      // Hide loader
-                      Get.back();
 
-                      // If user is null, show error
+                      // If user is null
                       if (user == null) {
+                        // Hide loader
+                        Get.back();
+                        // Show error
                         showAppDialog("Error", FireduinoAPI.message);
                         return;
                       }
@@ -96,6 +98,8 @@ class LoginPage extends StatelessWidget {
                       Store.set(StoreKeys.loginToken, FireduinoAPI.component);
                       // Save user
                       Store.set(StoreKeys.user, user.toJson());
+                      // Load auth
+                      await FireduinoAuth.init();
                       // Connect to the socket server
                       FireduinoSocket.instance.connect();
                       // Go to home page
