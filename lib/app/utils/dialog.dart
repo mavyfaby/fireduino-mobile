@@ -22,10 +22,10 @@ Future<dynamic> showAppDialog(String title, String message, { List<Widget>? acti
 }
 
 /// Shows a loader with the given [message].
-void showLoader(String message) {
+void showLoader(String message, { bool dissmisibile = false }) {
   Get.dialog(
     WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => dissmisibile,
       child: AlertDialog(
         contentPadding: const EdgeInsets.all(32),
         content: Row(

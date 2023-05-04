@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/departments.dart';
+import '../models/department.dart';
+import '../network/request.dart';
+import '../utils/dialog.dart';
+import '../network/location.dart';
 import '../controllers/home.dart';
 import '../controllers/main.dart';
 import '../widgets/drawer.dart';
@@ -68,7 +73,36 @@ class MainPage extends StatelessWidget {
         ),
     
         drawer: FireduinoDrawer(
-          onSelect: (index) {
+          onSelect: (index) async {
+            // If selecting, Fire departments, request location permission
+            if (index == 1) {
+              await FireduinoLocation.ensureLocationServiceEnabled();
+              await FireduinoLocation.ensureLocationPermissionAccepted();
+
+              //  Show dialog that we are fetching the latest fire departments
+              showLoader("Getting latest fire departments...");
+              // Fetch latest fire departments
+              List<FireDepartmentModel>? departments = await FireduinoAPI.fetchFireDepartments();
+              // Hide loader
+              Get.back();
+
+              // If result is null
+              if (departments == null) {
+                // Show error
+                showAppDialog("Error ", "Failed to fetch fire departments");
+                return;
+              }
+
+              // If result is empty
+              if (departments.isEmpty) {
+                // Show error
+                showAppDialog("Error ", "No fire departments found");
+              }
+
+              // Set fire departments
+              Get.find<FireDepartmentsController>().fireDepartments.value = departments;
+            }
+
             homeController.pageIndex.value = 0;
             mainController.pageStack.add(index);
             mainController.pageIndex.value = index;
@@ -92,10 +126,8 @@ class MainPage extends StatelessWidget {
       
         floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
       
-        bottomNavigationBar: Obx(() => AnimatedSlide(
-          offset: Offset(0, mainController.pageIndex.value == 0 ? 0 : 100),
-          duration: const Duration(seconds: 0),
-          child: BottomAppBar(
+        bottomNavigationBar: Obx(() => mainController.pageIndex.value == 0 ?
+          BottomAppBar(
             elevation: 1,
             child: Obx(() => Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -127,9 +159,9 @@ class MainPage extends StatelessWidget {
                 ),
               ],
             )),
-          ),
-        ))
-      ),
+          ) : const SizedBox(),
+        )
+      )
     );
   }
 }

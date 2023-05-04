@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../network/socket.dart';
-import '../store/auth.dart';
+import '../network/auth.dart';
 import '../store/store.dart';
 import '../models/user.dart';
 import '../network/request.dart';

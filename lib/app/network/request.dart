@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 
+import '../models/department.dart';
 import '../models/fireduino.dart';
 import '../store/global.dart';
 import '../models/establishment.dart';
@@ -272,13 +273,52 @@ class FireduinoAPI {
         final List<FireduinoModel> fireduinos = [];
 
         // For each fireduino
-        for (final fireduino in response.body['message']) {
+        for (final fireduino in response.body['data']) {
           // Add to list
           fireduinos.add(FireduinoModel.fromJson(fireduino));
         }
 
         // Return config
         return fireduinos;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
+
+  /// Fetches fire departments from the server
+  static Future<List<FireDepartmentModel>?> fetchFireDepartments() async {
+    try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.departments,
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Extract fire departments
+        final List<FireDepartmentModel> fireDepartments = [];
+
+        // For each fire department
+        for (final fireDepartment in response.body['data']) {
+          // Add to list
+          fireDepartments.add(FireDepartmentModel.fromJson(fireDepartment));
+        }
+
+        // Return config
+        return fireDepartments;
       }
 
       return null;

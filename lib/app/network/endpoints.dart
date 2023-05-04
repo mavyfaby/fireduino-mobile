@@ -6,6 +6,7 @@ class FireduinoEndpoints {
   static String verifyKey = "$webServerApi/verify";
   static String validateToken = "$webServerApi/validate";
   static String establishments = "$webServerApi/establishments";
+  static String departments = "$webServerApi/departments";
   static String fireduino = "$webServerApi/fireduino";
   static String fireduinos = "$webServerApi/fireduinos";
 }

@@ -26,7 +26,6 @@ class FireduinoDrawer extends StatelessWidget {
               return;
             }
 
-            mainController.pageIndex.value = index;
             onSelect(index);
           },
           children: [

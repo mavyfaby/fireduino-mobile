@@ -7,12 +7,13 @@ import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/main.dart';
 import 'app/controllers/signup.dart';
+import 'app/controllers/departments.dart';
 
 import 'app/store/global.dart';
 import 'app/network/socket.dart';
 import 'app/theme/helpers.dart';
 import 'app/routes/routes.dart';
-import 'app/store/auth.dart';
+import 'app/network/auth.dart';
 import 'app/env/config.dart';
 
 void main() async {
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
     Get.put(LoginController());
     Get.put(CreateAccountController());
     Get.put(FireduinosController());
+    Get.put(FireDepartmentsController());
 
     return GetMaterialApp(
       title: appName,

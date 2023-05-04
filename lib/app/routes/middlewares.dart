@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../utils/dialog.dart';
-import '../store/auth.dart';
+import '../network/auth.dart';
 import '../store/store.dart';
 
 /// Middleware to check if the user is logged in
