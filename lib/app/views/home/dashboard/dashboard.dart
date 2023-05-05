@@ -139,16 +139,16 @@ class DashIncidentReports extends StatelessWidget {
   Widget build(BuildContext context) {
     final dash = Get.find<DashController>();
 
-    return InkWell(
-      onTap: () {
-        Get.find<MainController>().pageStack.add(2);
-        Get.find<MainController>().pageIndex.value = 2;
-      },
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: Get.theme.brightness == Brightness.light ?
-          Get.theme.colorScheme.primaryContainer :
-          Get.theme.colorScheme.surfaceVariant,
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      color: Get.theme.brightness == Brightness.light ?
+        Get.theme.colorScheme.primaryContainer :
+        Get.theme.colorScheme.surfaceVariant,
+      child: InkWell(
+        onTap: () {
+          Get.find<MainController>().pageStack.add(2);
+          Get.find<MainController>().pageIndex.value = 2;
+        },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -318,7 +318,7 @@ class DashIncidentReports extends StatelessWidget {
               )
             ],
           ),
-        )
+        ),
       ),
     );
   }

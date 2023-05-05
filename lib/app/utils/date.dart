@@ -31,6 +31,12 @@ String getReadableDate(DateTime datetime) {
     hour = (datetime.hour - 12).toString();
   }
 
+  // If hour is 0
+  if (datetime.hour == 0) {
+    // Set to 12
+    hour = '12';
+  }
+
   // If minute is less than 10
   if (datetime.minute < 10) {
     // Add 0

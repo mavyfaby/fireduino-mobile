@@ -63,7 +63,6 @@ class HomePage extends StatelessWidget {
             IconButton(
               onPressed: () {
                 homeController.pageIndex.value = 1;
-                mainController.pageIndex.value = 1;
                 homeController.pageController.animateToPage(1,
                   duration: const Duration(milliseconds: 210),
                   curve: Curves.easeInOut
