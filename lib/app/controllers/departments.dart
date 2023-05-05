@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../models/department.dart';
 
 class FireDepartmentsController extends GetxController {
-  RxList<FireDepartmentModel> fireDepartments = <FireDepartmentModel>[].obs;
-  Rx<GoogleMapController?> mapController = null.obs;
   Rx<Position?> currentPosition = null.obs;
+  Rx<GoogleMapController?> mapController = null.obs;
+  List<FireDepartmentModel> fireDepartments = <FireDepartmentModel>[].obs;
 }

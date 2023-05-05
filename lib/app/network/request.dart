@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 
+import '../models/dashboard.dart';
 import '../models/department.dart';
 import '../models/fireduino.dart';
 import '../store/global.dart';
@@ -151,6 +152,8 @@ class FireduinoAPI {
       Response response = await _connect.post(FireduinoEndpoints.login, formData, contentType: 'application/x-www-form-urlencoded');
       // Set data
       setData(response);
+
+      print(FireduinoEndpoints.login);
 
       // If the response is successful
       if (response.statusCode == 200) {
@@ -319,6 +322,41 @@ class FireduinoAPI {
 
         // Return config
         return fireDepartments;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
+
+  /// Fetches dashboard data from the server
+  static Future<DashboardDataModel?> fetchDashboardData(int year, bool isQuarter12) async {
+    try {
+      print("Requesting...");
+
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.dashboard,
+        query: {
+          'year': '$year', 'isQuarter12': isQuarter12 ? '1' : '0'
+        },
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Return config
+        return DashboardDataModel.fromJson(response.body['data']);
       }
 
       return null;
