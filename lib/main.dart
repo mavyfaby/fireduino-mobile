@@ -7,6 +7,7 @@ import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/main.dart';
 import 'app/controllers/signup.dart';
+import 'app/controllers/dashboard.dart';
 import 'app/controllers/departments.dart';
 
 import 'app/store/global.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
 
     Get.put(MainController());
     Get.put(HomeController());
+    Get.put(DashController());
     Get.put(LoginController());
     Get.put(CreateAccountController());
     Get.put(FireduinosController());

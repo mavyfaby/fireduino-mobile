@@ -35,12 +35,14 @@ class LoginPage extends StatelessWidget {
         
                 Text("Fireduino", style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   color: Get.theme.colorScheme.primary,
+                  fontFamily: appDefaultFont,
                   fontWeight: FontWeight.bold)
                 ), 
                 const SizedBox(height: 16),
-                const Text(appTagline),
-
-                const SizedBox(height: 32),
+                Text(appTagline, style: Get.textTheme.bodyLarge!.copyWith(
+                  letterSpacing: 0
+                )),
+                const SizedBox(height: 42),
                 SizedBox(
                   width: 300,
                   child: TextField(

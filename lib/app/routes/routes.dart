@@ -10,7 +10,7 @@ import '../views/home/fireduinos/fireduino/fireduino.dart';
 import 'middlewares.dart';
 
 class Routes {
-  static get() {
+  static List<GetPage> get() {
     return [
       GetPage(
         name: '/login',

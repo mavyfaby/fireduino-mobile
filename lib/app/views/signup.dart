@@ -327,7 +327,8 @@ class Establishment extends StatelessWidget {
       child: Column(
         children: [
           SearchAnchor(
-            isFullScreen: false,
+            isFullScreen: true,
+            viewHintText: "Search establishment",
             builder: (context, controller) {
               return  TextField(
                 maxLength: 32,
@@ -348,7 +349,10 @@ class Establishment extends StatelessWidget {
               if (controller.text.isEmpty) {
                 return [
                   const Center(
-                    child: Text("Enter establishment name"),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Text("Enter establishment name")
+                    ),
                   )
                 ];
               }
@@ -363,8 +367,11 @@ class Establishment extends StatelessWidget {
 
                       // Check if establishments is empty
                       if (establishments.isEmpty) {
-                        return const Center(
-                          child: Text("No establishment found"),
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Center(
+                            child: Text("No establishment found"),
+                          ),
                         );
                       }
 
@@ -386,8 +393,11 @@ class Establishment extends StatelessWidget {
                       );
                     }
 
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 16),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     );
                   },
                 )

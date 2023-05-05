@@ -15,6 +15,7 @@ class FireDepartmentsView extends StatelessWidget {
     Set<Marker> markers = {};
 
     final deptController = Get.find<FireDepartmentsController>();
+    final isReady = false.obs;
 
     for (FireDepartmentModel dept in deptController.fireDepartments) {
       markers.add(
@@ -44,46 +45,39 @@ class FireDepartmentsView extends StatelessWidget {
     x /= deptController.fireDepartments.length;
     y /= deptController.fireDepartments.length;
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Text(
-            "${deptController.fireDepartments.length} fire departments listed.",
-            style: Get.textTheme.bodyMedium,
+    return Stack(
+      children: [
+        Obx(() => !isReady.value ? const Center(
+          child: CircularProgressIndicator(),
+        ) : const SizedBox()),
+        GoogleMap(
+          mapType: MapType.normal,
+          indoorViewEnabled: true,
+          compassEnabled: true,
+          myLocationEnabled: true,
+          markers: markers,
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(defaultLatitude, defaultLongitude),
+            zoom: 13,
           ),
-          const SizedBox(height: 32),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: GoogleMap(
-                mapType: MapType.normal,
-                indoorViewEnabled: true,
-                compassEnabled: true,
-                myLocationEnabled: true,
-                markers: markers,
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(defaultLatitude, defaultLongitude),
-                  zoom: 13,
+          onMapCreated: (GoogleMapController controller) async {
+            // Set {isReady} to true
+            isReady.value = true;
+
+            // Get the current location of the user
+            Geolocator.getCurrentPosition().then((location) {
+              controller.animateCamera(
+                CameraUpdate.newCameraPosition(
+                  CameraPosition(
+                    target: LatLng(x, y),
+                    zoom: 13,
+                  ),
                 ),
-                onMapCreated: (GoogleMapController controller) {
-                  // Get the current location of the user
-                  Geolocator.getCurrentPosition().then((location) {
-                    controller.animateCamera(
-                      CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                          target: LatLng(x, y),
-                          zoom: 13,
-                        ),
-                      ),
-                    );
-                  });
-                }
-              ),
-            ),
-          ),
-        ],
-      ),
+              );
+            });
+          }
+        ),
+      ],
     );
   }
 

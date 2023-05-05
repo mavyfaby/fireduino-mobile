@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../env/config.dart';
+
 class FireduinoStatus extends StatelessWidget {
   const FireduinoStatus({ required this.isOnline, super.key});
 
@@ -30,6 +32,7 @@ class FireduinoStatus extends StatelessWidget {
         const SizedBox(width: 8),
         Text("Device is o${isOnline ? "n" : "ff"}line", style: Theme.of(context).textTheme.titleMedium!.copyWith(
           fontWeight: FontWeight.w500,
+          fontFamily: appDefaultFont,
           color: color
         )),
       ],

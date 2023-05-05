@@ -37,7 +37,9 @@ class FireduinoDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(appName, style: Theme.of(context).textTheme.titleMedium),
+                  Text(appName, style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontFamily: appDefaultFont,
+                  )),
                   const SizedBox(height: 16),
                   Row(
                     children: [
@@ -62,7 +64,7 @@ class FireduinoDrawer extends StatelessWidget {
             
             ...Global.drawerItems.map((e) => NavigationDrawerDestination(
               icon: Icon(e['icon']),
-              label: Text(e['title']),
+              label: Text(e['title'], style: const TextStyle(fontFamily: appDefaultFont)),
               selectedIcon: Icon(e['sicon']),
             )).toList(),
             

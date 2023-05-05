@@ -110,57 +110,6 @@ class MainPage extends StatelessWidget {
         ),
       
         body: Obx(() => pages[mainController.pageIndex.value]),
-      
-        floatingActionButton: Obx(() => AnimatedSlide(
-          offset: Offset(0, mainController.pageIndex.value == 0 ? 0 : 100),
-          duration: const Duration(seconds: 0),
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              Get.toNamed('/add');
-            },
-            elevation: 0,
-            icon: const Icon(Icons.add),
-            label: const Text("Fireduino"),
-          ),
-        )),
-      
-        floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
-      
-        bottomNavigationBar: Obx(() => mainController.pageIndex.value == 0 ?
-          BottomAppBar(
-            elevation: 1,
-            child: Obx(() => Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    homeController.pageIndex.value = 0;
-                    homeController.pageController.animateToPage(0,
-                      duration: const Duration(milliseconds: 210),
-                      curve: Curves.easeInOut
-                    );
-                  },
-                  isSelected: homeController.pageIndex.value == 0,
-                  icon: const Icon(Icons.dashboard_outlined),
-                  selectedIcon: const Icon(Icons.dashboard_rounded),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: () {
-                    homeController.pageIndex.value = 1;
-                    homeController.pageController.animateToPage(1,
-                      duration: const Duration(milliseconds: 210),
-                      curve: Curves.easeInOut
-                    );
-                  },
-                  isSelected: homeController.pageIndex.value == 1,
-                  icon: const Icon(Icons.fireplace_outlined),
-                  selectedIcon: const Icon(Icons.fireplace_rounded),
-                ),
-              ],
-            )),
-          ) : const SizedBox(),
-        )
       )
     );
   }

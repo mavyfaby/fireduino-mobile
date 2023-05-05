@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../env/config.dart';
 import '../../../../store/global.dart';
 import '../../../../widgets/status.dart';
 
@@ -25,24 +26,24 @@ class FireduinoPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Name: "),
-                  Text(Get.parameters["name"]!, style: Theme.of(context).textTheme.titleSmall),
+                  const Text("Name: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
+                  Text(Get.parameters["name"]!, style: Theme.of(context).textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Serial ID: "),
-                  Text(Get.parameters["serialId"]!, style: Theme.of(context).textTheme.titleSmall),
+                  const Text("Serial ID: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
+                  Text(Get.parameters["serialId"]!, style: Theme.of(context).textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Status: "),
-                  Obx(() => Text(status.value, style: Theme.of(context).textTheme.titleSmall)),
+                  const Text("Status: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
+                  Obx(() => Text(status.value, style: Theme.of(context).textTheme.titleMedium)),
                 ],
               ),
               const SizedBox(height: 64),
@@ -84,6 +85,7 @@ class FireduinoPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Obx(() => Text(mainStatus.value, style: Get.textTheme.headlineMedium!.copyWith(
+                      fontFamily: appDefaultFont,
                       color: Get.theme.brightness == Brightness.light ?
                         Get.theme.colorScheme.onPrimary :
                         Get.theme.colorScheme.onPrimaryContainer

@@ -7,6 +7,8 @@ import '../models/user.dart';
 import 'store.dart';
 
 class Global {
+  static RxList<Map<String, dynamic>> onlineFireduinos = RxList.empty();
+
   static UserModel get user => UserModel.fromJson(Store.get(StoreKeys.user));
   static String? get token => Store.get(StoreKeys.loginToken);
   static String deviceId = "";
@@ -18,7 +20,10 @@ class Global {
     deviceId = "$deviceId(${await PlatformDeviceId.getDeviceId})";
   }
 
-  static RxList<Map<String, dynamic>> onlineFireduinos = RxList.empty();
+  static List<String> months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"
+  ];
 
   static List<Map<String, dynamic>> get drawerItems => [
     {

@@ -6,7 +6,6 @@ Map<String, ThemeData> getTheme(BuildContext context) {
   return {
     'light': ThemeData(
       useMaterial3: true,
-      fontFamily: "Poppins",
       colorScheme: lightColorScheme,
       scaffoldBackgroundColor: Color.alphaBlend(
         lightColorScheme.primary.withOpacity(0.05),
@@ -23,7 +22,6 @@ Map<String, ThemeData> getTheme(BuildContext context) {
     ),
     'dark': ThemeData(
       useMaterial3: true,
-      fontFamily: "Poppins",
       colorScheme: darkColorScheme,
       scaffoldBackgroundColor: Color.alphaBlend(
         darkColorScheme.primary.withOpacity(0.05),
