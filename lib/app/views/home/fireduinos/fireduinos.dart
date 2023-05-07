@@ -11,8 +11,10 @@ class FireduinosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fireduinoCtrl = Get.find<FireduinosController>();
+
     return  FutureBuilder(
-      future: Get.find<FireduinosController>().fetchFireduinos(),
+      future: fireduinoCtrl.fetchFireduinos(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           // If has error
@@ -22,17 +24,17 @@ class FireduinosPage extends StatelessWidget {
           // If successful
           return RefreshIndicator(
             onRefresh: () async {
-              await Get.find<FireduinosController>().fetchFireduinos();
+              await fireduinoCtrl.fetchFireduinos();
             },
             triggerMode: RefreshIndicatorTriggerMode.anywhere,
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: Obx(() => Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Obx(() => fireduinoCtrl.count > 0 ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Opacity(
                     opacity: 0.75,
-                    child: Text("${Get.find<FireduinosController>().count} total number of Fireduinos",
+                    child: Text("Fireduinos: ${fireduinoCtrl.count}",
                       style: Theme.of(context).textTheme.titleSmall
                     )
                   ),
@@ -42,18 +44,20 @@ class FireduinosPage extends StatelessWidget {
                       crossAxisCount: 2,
                       mainAxisSpacing: 4,
                       crossAxisSpacing: 4,
-                      itemCount: Get.find<FireduinosController>().count,
+                      itemCount: fireduinoCtrl.count,
                       itemBuilder: (context, index) {
                         return Obx(() => FireduinoTile(
-                          name: Get.find<FireduinosController>().devices[index].name,
-                          serialId: Get.find<FireduinosController>().devices[index].serialId,
-                          isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.find<FireduinosController>().devices[index].serialId) >= 0,
+                          name: fireduinoCtrl.devices[index].name,
+                          serialId: fireduinoCtrl.devices[index].serialId,
+                          isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == fireduinoCtrl.devices[index].serialId) >= 0,
                           index: index + 1,
                         ));
                       },
                     ),
                   )
                 ],
+              ) : Center(
+                child: Text("No fireduinos found", style: Theme.of(context).textTheme.titleSmall)
               ))
             )
           );
