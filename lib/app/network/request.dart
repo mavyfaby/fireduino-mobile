@@ -220,12 +220,12 @@ class FireduinoAPI {
   }
 
   /// Add fireduino
-  static Future<bool> addFireduino(int estbID, String serialID, String name) async {
+  static Future<bool> addFireduino(int estbID, String mac, String name) async {
     try {
       // Declare form data
       final formData = {
         'estbID': estbID,
-        'serialID': serialID,
+        'mac': mac,
         'name': name,
       };
 

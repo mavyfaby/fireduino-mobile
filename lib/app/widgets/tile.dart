@@ -5,14 +5,14 @@ class FireduinoTile extends StatelessWidget {
   const FireduinoTile({
     required this.index,
     required this.name,
-    required this.serialId,
+    required this.mac,
     required this.isOnline,
     super.key
   });
 
   final int index;
   final String name;
-  final String serialId;
+  final String mac;
   final bool isOnline;
 
   @override
@@ -26,7 +26,7 @@ class FireduinoTile extends StatelessWidget {
         onTap: () {
           Get.toNamed("/fireduino", parameters: {
             "name": name,
-            "serialId": serialId
+            "mac": mac
           });
         },
         child: Padding(
@@ -44,7 +44,7 @@ class FireduinoTile extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onSurfaceVariant
                   )),
                   const SizedBox(height: 4),
-                  Text(serialId.toString(), style: Theme.of(context).textTheme.bodySmall),
+                  Text(mac.toString(), style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
               Expanded(

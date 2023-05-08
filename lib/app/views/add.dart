@@ -12,7 +12,7 @@ class AddFireduinoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController serialId = TextEditingController();
+    final TextEditingController mac = TextEditingController();
     final TextEditingController name = TextEditingController();
     final RxString nameErrorText = "".obs;
     final RxString errorText = "".obs;
@@ -39,15 +39,33 @@ class AddFireduinoPage extends StatelessWidget {
             Obx(() => SizedBox(
               height: nameErrorText.value.isEmpty ? 0 : 16,
             )),
-            Obx(() => TextField(
-              controller: serialId,
-              decoration: CustomInputDecoration(
-                context: context,
-                labelText: "Serial ID",
-                prefixIcon: const Icon(Icons.key),
-                errorText: errorText.value.isEmpty ? null : errorText.value,
-              ),
-            )),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Obx(() => TextField(
+                    controller: mac,
+                    decoration: CustomInputDecoration(
+                      context: context,
+                      labelText: "MAC Address",
+                      prefixIcon: const Icon(Icons.wifi_tethering_sharp),
+                      errorText: errorText.value.isEmpty ? null : errorText.value,
+                    ),
+                  )),
+                ),
+                const SizedBox(width: 8),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TextButton.icon(
+                    label: const Text("Scan"),
+                    icon: const Icon(Icons.qr_code_scanner_rounded),
+                    onPressed: () {
+                
+                    },
+                  ),
+                )
+              ],
+            ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -56,14 +74,14 @@ class AddFireduinoPage extends StatelessWidget {
                   onPressed: () {
                     // Reset the error text
                     errorText.value = "";
-                    // Check the serial id
-                    checkSerial(serialId.text, false, (isAvailable) {
+                    // Check the mac address
+                    checkMacAddress(mac.text, false, (isAvailable) {
                       if (isAvailable == null || isAvailable) {
                         return;
                       }
 
                       // Set the error text
-                      errorText.value = "Oops! The Serial ID you entered is invalid or doesn't exist.";
+                      errorText.value = "Oops! MAC Address is invalid or doesn't exist.";
                     });
                   },
                   child: const Text("Check device")
@@ -74,8 +92,8 @@ class AddFireduinoPage extends StatelessWidget {
                     // Reset the error text
                     errorText.value = "";
                     nameErrorText.value = "";
-                    // Check the serial id
-                    checkSerial(serialId.text, true, (isAvailable) async {
+                    // Check the mac address
+                    checkMacAddress(mac.text, true, (isAvailable) async {
                       // Check if the server is available
                       if (isAvailable == null) {
                         return;
@@ -94,11 +112,11 @@ class AddFireduinoPage extends StatelessWidget {
                         showLoader("Adding fireduino device...");
 
                         // Add the fireduino device
-                        if (await FireduinoAPI.addFireduino(Global.user.eid!, serialId.text, name.text)) {
+                        if (await FireduinoAPI.addFireduino(Global.user.eid!, mac.text, name.text)) {
                           // Hide the loading dialog
                           Get.back();
                           // If success, show dialog
-                          await showAppDialog("Success", "Fireduino device ${name.text} added successfully to your establishment!");
+                          await showAppDialog("Add Success!", "Fireduino device ${name.text} added successfully to your establishment!");
                           // Pop the page
                           Get.back();
                           // Force update
@@ -115,7 +133,7 @@ class AddFireduinoPage extends StatelessWidget {
                       }
 
                       // Set the error text
-                      errorText.value = "Oops! The Serial ID you entered is invalid or doesn't exist.";
+                      errorText.value = "Oops! MAC Address is invalid or doesn't exist.";
                     });
                   },
                   child: const Text("Add device")
@@ -128,12 +146,12 @@ class AddFireduinoPage extends StatelessWidget {
     );
   }
 
-  /// Check the serial id
-  void checkSerial(String serialId, bool isAdd, Function callback) {
+  /// Check the mac address
+  void checkMacAddress(String mac, bool isAdd, Function callback) {
     // Show the loading dialog
-    showLoader("Checking fireduino...");
+    showLoader("Checking MAC Address...");
     // Check the fireduino device
-    FireduinoSocket.instance.checkFireduino(serialId, (isAvailable) async {
+    FireduinoSocket.instance.checkFireduino(mac, (isAvailable) async {
       // Hide the loading dialog
       Get.back();
 
@@ -147,7 +165,7 @@ class AddFireduinoPage extends StatelessWidget {
       // Check if the device is available and is not from the add button
       if (isAvailable && !isAdd) {
         // Show the snackbar
-        await showAppDialog("Success", "The Serial ID you entered is available.");
+        await showAppDialog("Success!", "MAC Address is available.");
       }
 
       // Check if the device is connected

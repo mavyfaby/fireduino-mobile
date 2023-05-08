@@ -1,3 +1,4 @@
+import 'package:fireduino/app/network/socket.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,10 @@ class FireduinosPage extends StatelessWidget {
           // If successful
           return RefreshIndicator(
             onRefresh: () async {
+              // Fetch fireduinos
               await fireduinoCtrl.fetchFireduinos();
+              // Get online fireduinos
+              FireduinoSocket.instance.getOnlineFireduinos();
             },
             triggerMode: RefreshIndicatorTriggerMode.anywhere,
             child: Padding(
@@ -48,8 +52,8 @@ class FireduinosPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Obx(() => FireduinoTile(
                           name: fireduinoCtrl.devices[index].name,
-                          serialId: fireduinoCtrl.devices[index].serialId,
-                          isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == fireduinoCtrl.devices[index].serialId) >= 0,
+                          mac: fireduinoCtrl.devices[index].mac,
+                          isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == fireduinoCtrl.devices[index].mac) >= 0,
                           index: index + 1,
                         ));
                       },

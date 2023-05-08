@@ -50,7 +50,7 @@ class FireduinoSocket {
       // Emit the platform information
       socket!.emit('mobile', Global.deviceId);
       // Emit get online fireduino devices
-      socket!.emit('get_online_fireduinos');
+      getOnlineFireduinos();
     });
 
     /// Listen for the disconnect event
@@ -97,7 +97,7 @@ class FireduinoSocket {
   }
 
   /// Check fireduino device status
-  void checkFireduino(String serialId, Function callback) {
+  void checkFireduino(String mac, Function callback) {
     // Ensure that the socket is connected
     if (socket == null || !socket!.connected) {
       // Log that we are not connected
@@ -106,17 +106,21 @@ class FireduinoSocket {
       return;
     }
 
-    print("Checking fireduino device with serial ID: $serialId");
+    print("Checking fireduino device with MAC Address: $mac");
 
     // Off the fireduino-check event
     socket!.off('fireduino_check');
     // Emit the fireduino-check event
-    socket!.emit('fireduino_check', serialId);
+    socket!.emit('fireduino_check', mac);
     // Listen for the fireduino-check event
     socket!.on('fireduino_check', (data) {
       // Call the callback function
       callback(data);
     });
+  }
+
+  void getOnlineFireduinos() {
+    socket!.emit('get_online_fireduinos');
   }
 
   /// Set online fireduino devices

@@ -34,8 +34,8 @@ class FireduinoPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Serial ID: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
-                  Text(Get.parameters["serialId"]!, style: Theme.of(context).textTheme.titleMedium),
+                  const Text("MAC Address: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
+                  Text(Get.parameters["mac"]!, style: Theme.of(context).textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 8),
@@ -47,7 +47,7 @@ class FireduinoPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 64),
-              Obx(() => FireduinoStatus(isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.parameters['serialId']) >= 0)),
+              Obx(() => FireduinoStatus(isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.parameters['mac']) >= 0)),
               const SizedBox(height: 64),
               GestureDetector(
                 onTapDown: (TapDownDetails details) {
