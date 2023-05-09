@@ -20,6 +20,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginController = Get.find<LoginController>();
+    final isPassVisible = false.obs;
 
     return Scaffold(
       body: Stack(
@@ -58,17 +59,23 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(
                   width: 300,
-                  child: TextField(
-                    obscureText: true,
+                  child: Obx(() => TextField(
+                    obscureText: !isPassVisible.value,
                     decoration: CustomInputDecoration(
                       context: context,
                       labelText: "Password",
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
+                      suffixIcon: IconButton(
+                        icon: Icon(isPassVisible.value ? Icons.visibility : Icons.visibility_off),
+                        onPressed: () {
+                          isPassVisible.value = !isPassVisible.value;
+                        },
+                      ),
                     ),
                     onChanged: (value) {
                       loginController.password.value = value;
                     },
-                  ),
+                  )),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(

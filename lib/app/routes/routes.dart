@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../views/add.dart';
 import '../views/login.dart';
 import '../views/main.dart';
+import '../views/scan.dart';
 import '../views/signup.dart';
 
 import '../views/home/fireduinos/fireduino/fireduino.dart';
@@ -24,6 +25,10 @@ class Routes {
       GetPage(
         name: '/add',
         page: () => const AddFireduinoPage()
+      ),
+      GetPage(
+        name: '/scan',
+        page: () => const ScanPage()
       ),
       GetPage(
         name: '/signup',
