@@ -31,34 +31,39 @@ class FireduinoDrawer extends StatelessWidget {
             onSelect(index);
           },
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(appName, style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontFamily: appDefaultFont,
-                  )),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Image.asset('assets/png/fireduino_icon.png', width: 32),
-                      const SizedBox(width: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [ 
-                          Text(Global.user.getFullname(), style: Theme.of(context).textTheme.titleMedium),
-                          Text(Global.user.getEmail(), style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            fontFamily: "Roboto"
-                          ))
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Divider(height: 1),
-                ], 
+            GestureDetector(
+              onTap: () {
+                Get.toNamed('/profile');
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(appName, style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontFamily: appDefaultFont,
+                    )),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Image.asset('assets/png/fireduino_icon.png', width: 32),
+                        const SizedBox(width: 16),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [ 
+                            Text(Global.user.getFullname(), style: Theme.of(context).textTheme.titleMedium),
+                            Text(Global.user.getEmail(), style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              fontFamily: "Roboto"
+                            ))
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(height: 1),
+                  ], 
+                ),
               ),
             ),
             
