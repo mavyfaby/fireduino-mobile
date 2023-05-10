@@ -1,8 +1,8 @@
-import 'package:fireduino/app/network/socket.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../network/socket.dart';
 import '../../../controllers/fireduinos.dart';
 import '../../../store/global.dart';
 import '../../../widgets/tile.dart';

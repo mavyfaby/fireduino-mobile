@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/home.dart';
-import '../../controllers/main.dart';
 
 import 'dashboard/dashboard.dart';
 import 'fireduinos/fireduinos.dart';
@@ -13,7 +12,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
-    final mainController = Get.find<MainController>();
 
     return Scaffold(
       body: PageView(
@@ -27,18 +25,14 @@ class HomePage extends StatelessWidget {
         ],
       ),
 
-      floatingActionButton: Obx(() => AnimatedSlide(
-        offset: Offset(0, mainController.pageIndex.value == 0 ? 0 : 100),
-        duration: const Duration(seconds: 0),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            Get.toNamed('/add');
-          },
-          elevation: 0,
-          icon: const Icon(Icons.add),
-          label: const Text("Fireduino"),
-        ),
-      )),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Get.toNamed('/add');
+        },
+        elevation: 0,
+        icon: const Icon(Icons.add),
+        label: const Text("Fireduino"),
+      ),
     
       floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
 

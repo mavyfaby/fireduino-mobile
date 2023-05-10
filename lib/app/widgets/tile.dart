@@ -20,7 +20,7 @@ class FireduinoTile extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       color: Get.theme.brightness == Brightness.light ?
-        Get.theme.colorScheme.primaryContainer :
+        Get.theme.colorScheme.onInverseSurface :
         Get.theme.colorScheme.surfaceVariant,
       child: InkWell(
         onTap: () {

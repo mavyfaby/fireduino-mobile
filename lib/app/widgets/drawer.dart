@@ -22,8 +22,14 @@ class FireduinoDrawer extends StatelessWidget {
           onDestinationSelected: (int index) {
             Get.back();
 
+            // If profile
+            if (index == 0) {
+              Get.toNamed("/profile");
+              return;
+            }
+
             // If logout
-            if (index == 8) {
+            if (index == 9) {
               confirmLogout();
               return;
             }
@@ -31,41 +37,34 @@ class FireduinoDrawer extends StatelessWidget {
             onSelect(index);
           },
           children: [
-            GestureDetector(
-              onTap: () {
-                Get.toNamed('/profile');
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(appName, style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontFamily: appDefaultFont,
-                    )),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Image.asset('assets/png/fireduino_icon.png', width: 32),
-                        const SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [ 
-                            Text(Global.user.getFullname(), style: Theme.of(context).textTheme.titleMedium),
-                            Text(Global.user.getEmail(), style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              fontFamily: "Roboto"
-                            ))
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    const Divider(height: 1),
-                  ], 
-                ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(appName, style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontFamily: appDefaultFont,
+              ))
+            ),
+
+            NavigationDrawerDestination(
+              icon: Image.asset('assets/png/fireduino_icon.png', width: 24),
+              label: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [ 
+                  Text(Global.user.getFullname(), style: Theme.of(context).textTheme.titleMedium),
+                  Text(Global.user.getEmail(), style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    fontFamily: "Roboto"
+                  ))
+                ],
               ),
             ),
+
+            const SizedBox(height: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Divider(height: 1),
+            ),
+
+            const SizedBox(height: 8),
             
             ...Global.drawerItems.map((e) => NavigationDrawerDestination(
               icon: Icon(e['icon']),
@@ -74,7 +73,7 @@ class FireduinoDrawer extends StatelessWidget {
             )).toList(),
             
             const Padding(
-              padding:EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 16),
+              padding:EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
               child: Divider(height: 1)
             ),
 

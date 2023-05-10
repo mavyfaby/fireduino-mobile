@@ -1,8 +1,9 @@
-import 'package:fireduino/app/models/dashboard.dart';
-import 'package:fireduino/app/network/request.dart';
-import 'package:fireduino/app/utils/dialog.dart';
-import 'package:fireduino/app/utils/snackbar.dart';
 import 'package:get/get.dart';
+
+import '../models/dashboard.dart';
+import '../network/request.dart';
+import '../utils/dialog.dart';
+import '../utils/snackbar.dart';
 
 class DashController extends GetxController {
   final RxInt fireduinos = (-1).obs;

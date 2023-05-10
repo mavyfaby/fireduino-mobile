@@ -61,16 +61,24 @@ class MainPage extends StatelessWidget {
               homeController.pageIndex.value == 0 ?
                 "Dashboard" :
                 "Fireduinos" : 
-              mainController.pageIndex.value >= Global.drawerItems.length ?
+              mainController.pageIndex.value > Global.drawerItems.length ?
                 "Preferences" :
-                Global.drawerItems[mainController.pageIndex.value]["title"],
+                Global.drawerItems[mainController.pageIndex.value - 1]["title"],
           )),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed("/profile");
+              },
+              icon: const Icon(Icons.account_circle_outlined),
+            )
+          ],
         ),
     
         drawer: FireduinoDrawer(
           onSelect: (index) async {
             // If selecting, Fire departments, request location permission
-            if (index == 1) {
+            if (index == 2) {
               await Get.find<MainController>().fetchFireDepartments();
             }
 
@@ -80,7 +88,7 @@ class MainPage extends StatelessWidget {
           },
         ),
       
-        body: Obx(() => pages[mainController.pageIndex.value]),
+        body: Obx(() => pages[mainController.pageIndex.value - 1]),
       )
     );
   }
