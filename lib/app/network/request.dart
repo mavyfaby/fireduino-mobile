@@ -153,8 +153,6 @@ class FireduinoAPI {
       // Set data
       setData(response);
 
-      print(FireduinoEndpoints.login);
-
       // If the response is successful
       if (response.statusCode == 200) {
         // If not success
@@ -333,8 +331,6 @@ class FireduinoAPI {
   /// Fetches dashboard data from the server
   static Future<DashboardDataModel?> fetchDashboardData(int year, bool isQuarter12) async {
     try {
-      print("Requesting...");
-
       /// Get the config from the server.
       Response response = await _connect.get(FireduinoEndpoints.dashboard,
         query: {
@@ -362,6 +358,35 @@ class FireduinoAPI {
       return null;
     } on TimeoutException {
       return null;
+    }
+  }
+
+  /// Determine whether the email exists
+  static Future<bool> isEmailExist(String email) async {
+    try {
+      // Declare form data
+      final formData = {
+        'email': email,
+      };
+
+      /// Get the config from the server.
+      Response response = await _connect.post(FireduinoEndpoints.validateEmail, formData,
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      print(response.body);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        return response.body['success'] && response.body['data'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
     }
   }
 }

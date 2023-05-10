@@ -127,6 +127,23 @@ class CreateAccountPage extends StatelessWidget {
                 return;
               }
 
+              // Show loading dialog
+              showLoader("Verifying email...");
+              // Check if email is already used
+              final bool isEmailUsed = await FireduinoAPI.isEmailExist(ctrl.email.value);
+              // Close loading dialog
+              Get.back();
+
+              // Check if email is already used
+              if (isEmailUsed) {
+                // Show error dialog
+                showAppDialog("Email already used", "Please enter another email");
+                // Reset step to 2
+                ctrl.currentStep.value = 1;
+                ctrl.maxStep.value = 1;
+                return;
+              }
+
               return ctrl.nextStep();
             }
             
