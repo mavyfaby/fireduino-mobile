@@ -10,7 +10,7 @@ import '../store/store.dart';
 import 'departments.dart';
 
 class MainController extends GetxController {
-  final pageStack = [0];
+  final pageStack = [1];
   final pageIndex = 1.obs;
 
   void logout() async {
