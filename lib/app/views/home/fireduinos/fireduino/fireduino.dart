@@ -47,7 +47,7 @@ class FireduinoPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 64),
-              Obx(() => FireduinoStatus(isOnline: Global.onlineFireduinos.indexWhere((el) => el["uid"] == Get.parameters['mac']) >= 0)),
+              Obx(() => FireduinoStatus(isOnline: Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0)),
               const SizedBox(height: 64),
               GestureDetector(
                 onTapDown: (TapDownDetails details) {
