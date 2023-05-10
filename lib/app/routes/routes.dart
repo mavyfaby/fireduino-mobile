@@ -1,3 +1,4 @@
+import 'package:fireduino/app/views/profile/profile.dart';
 import 'package:get/get.dart';
 
 import '../views/add.dart';
@@ -37,6 +38,10 @@ class Routes {
       GetPage(
         name: '/fireduino',
         page: () => const FireduinoPage()
+      ),
+      GetPage(
+        name: '/profile',
+        page: () => const ProfilePage()
       ),
     ];
   }
