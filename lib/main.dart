@@ -7,6 +7,7 @@ import 'app/controllers/home.dart';
 import 'app/controllers/login.dart';
 import 'app/controllers/main.dart';
 import 'app/controllers/signup.dart';
+import 'app/controllers/profile.dart';
 import 'app/controllers/dashboard.dart';
 import 'app/controllers/departments.dart';
 
@@ -43,16 +44,19 @@ class MyApp extends StatelessWidget {
     Get.put(HomeController());
     Get.put(DashController());
     Get.put(LoginController());
+    Get.put(ProfileController());
     Get.put(CreateAccountController());
     Get.put(FireduinosController());
     Get.put(FireDepartmentsController());
+
 
     return GetMaterialApp(
       title: appName,
       initialRoute: '/main',
       getPages: Routes.get(),
       theme: theme['light'],
-      darkTheme: theme['dark']
+      darkTheme: theme['dark'],
+      themeMode: Global.themeMode,
     );
   }
 }

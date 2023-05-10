@@ -51,17 +51,17 @@ class FireduinoPage extends StatelessWidget {
               const SizedBox(height: 64),
               GestureDetector(
                 onTapDown: (TapDownDetails details) {
-                  print("DOWN");
+                  debugPrint("DOWN");
                   mainStatus.value = "Extinguishing...";
                   status.value = "Extinguishing...";
                 },
                 onTapUp: (TapUpDetails details) {
-                  print("UP");
+                  debugPrint("UP");
                   mainStatus.value = "Extinguish";
                   status.value = "Extinguished";
                 },
                 onTapCancel: () {
-                  print("CANCEL");
+                  debugPrint("CANCEL");
                   mainStatus.value = "Extinguish";
                   status.value = "Cancelled";
                 },

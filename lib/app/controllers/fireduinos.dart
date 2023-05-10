@@ -19,7 +19,5 @@ class FireduinosController extends GetxController {
 
     // isFetching.value = false;
     this.devices.value = devices;
-    // Log that the fireduinos have been fetched successfully
-    print("Fireduinos fetched successfully");
   }
 }

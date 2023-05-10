@@ -1,4 +1,5 @@
 // import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../store/global.dart';
@@ -24,19 +25,19 @@ class FireduinoSocket {
     // Ensure that the socket is not already connected
     if (socket != null && socket!.connected) {
       // Log that we are already connected
-      print('Already connected to socket server at $_host');
+      debugPrint('Already connected to socket server at $_host');
       return;
     }
 
     // If token is null
     if (Global.token == null) {
       // Log that we are not connected
-      print('Login token is null. Not connecting to socket server at $_host');
+      debugPrint('Login token is null. Not connecting to socket server at $_host');
       return;
     }
 
     // Log that we are connecting
-    print('Connecting to socket server at $_host');
+    debugPrint('Connecting to socket server at $_host');
 
     /// Connect to the socket server with the namespace (Specific to the establishment)
     socket = io("$_host/estb${Global.user.eid}", <String, dynamic>{
@@ -46,7 +47,7 @@ class FireduinoSocket {
     /// Listen for the connection event
     socket!.on("connect", (data) {
       // Log that we are connected
-      print('Connected to socket server at $_host');
+      debugPrint('Connected to socket server at $_host');
       // Emit the platform information
       socket!.emit('mobile', Global.deviceId);
       // Emit get online fireduino devices
@@ -56,14 +57,14 @@ class FireduinoSocket {
     /// Listen for the disconnect event
     socket!.on("disconnect", (data) {
       // Log that we are disconnected
-      print('Disconnected from socket server at $_host');
+      debugPrint('Disconnected from socket server at $_host');
     });
 
     /// Listen for `get_online_fireduinos` event
     /// This event is emitted when the socket server requests for online fireduino devices
     socket!.on("get_online_fireduinos", (data) {
       // Log that we are getting online fireduino devices
-      print('get_online_fireduinos: $data');
+      debugPrint('get_online_fireduinos: $data');
       // Set the online fireduino devices
       setOnlineFireduinos(data);
     });
@@ -72,7 +73,7 @@ class FireduinoSocket {
     /// This event is emitted when a fireduino device is online or not
     socket!.on('fireduino_connect', (data) {
       // Log that a fireduino device is connected
-      print('fireduino_connect: $data');
+      debugPrint('fireduino_connect: $data');
       // Set the online fireduino devices
       setOnlineFireduinos(data);
     });
@@ -81,7 +82,7 @@ class FireduinoSocket {
     /// This event is emitted when a fireduino device is disconnected
     socket!.on('fireduino_disconnect', (data) {
       // Log that a fireduino device has been disconnected
-      print('fireduino_disconnect: $data');
+      debugPrint('fireduino_disconnect: $data');
       // Set the online fireduino devices
       setOnlineFireduinos(data);
     });
@@ -101,12 +102,12 @@ class FireduinoSocket {
     // Ensure that the socket is connected
     if (socket == null || !socket!.connected) {
       // Log that we are not connected
-      print('Not connected to socket server at $_host');
+      debugPrint('Not connected to socket server at $_host');
       callback(null);
       return;
     }
 
-    print("Checking fireduino device with MAC Address: $mac");
+    debugPrint("Checking fireduino device with MAC Address: $mac");
 
     // Off the fireduino-check event
     socket!.off('fireduino_check');

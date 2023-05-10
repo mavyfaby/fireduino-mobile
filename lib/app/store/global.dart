@@ -1,4 +1,5 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:fireduino/app/utils/theme.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class Global {
 
   static UserModel get user => UserModel.fromJson(Store.get(StoreKeys.user));
   static String? get token => Store.get(StoreKeys.loginToken);
+  static ThemeMode get themeMode => getThemeMode(Store.get(StoreKeys.theme) ?? "System");
+
   static String deviceId = "";
 
   static initDeviceInfo() async {

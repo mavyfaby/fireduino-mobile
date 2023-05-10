@@ -57,7 +57,7 @@ class MainPage extends StatelessWidget {
             icon: const Icon(Icons.menu),
           ),
           title: Obx(() => Text(
-            mainController.pageIndex.value == 0 ?
+            mainController.pageIndex.value == 1 ?
               homeController.pageIndex.value == 0 ?
                 "Dashboard" :
                 "Fireduinos" : 
@@ -65,14 +65,6 @@ class MainPage extends StatelessWidget {
                 "Preferences" :
                 Global.drawerItems[mainController.pageIndex.value - 1]["title"],
           )),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed("/profile");
-              },
-              icon: const Icon(Icons.account_circle_outlined),
-            )
-          ],
         ),
     
         drawer: FireduinoDrawer(

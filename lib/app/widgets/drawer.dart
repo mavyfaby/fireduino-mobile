@@ -58,13 +58,10 @@ class FireduinoDrawer extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 16),
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.all(16),
               child: Divider(height: 1),
             ),
-
-            const SizedBox(height: 8),
             
             ...Global.drawerItems.map((e) => NavigationDrawerDestination(
               icon: Icon(e['icon']),

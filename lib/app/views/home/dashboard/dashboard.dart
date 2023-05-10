@@ -56,9 +56,9 @@ class DashboardPage extends StatelessWidget {
                   Center(
                     child: Obx(() => Text(
                       "As of ${getReadableDate(dash.date.value)}",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontFamily: appDefaultFont,
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.7)
+                        color: Theme.of(context).colorScheme.secondary
                       )
                     ))
                   )
@@ -90,9 +90,9 @@ class DashData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: Get.theme.brightness == Brightness.light ?
-        Get.theme.colorScheme.onInverseSurface :
-        Get.theme.colorScheme.surfaceVariant,
+      color: Theme.of(context).brightness == Brightness.light ?
+        Theme.of(context).colorScheme.onInverseSurface :
+        Theme.of(context).colorScheme.surfaceVariant,
       child: InkWell(
         onTap: () async {
           if (index == 0) {
@@ -103,8 +103,8 @@ class DashData extends StatelessWidget {
             );
           } else {
             await Get.find<MainController>().fetchFireDepartments();
-            Get.find<MainController>().pageStack.add(1);
-            Get.find<MainController>().pageIndex.value = 1;
+            Get.find<MainController>().pageStack.add(2);
+            Get.find<MainController>().pageIndex.value = 2;
           }
         },
         child: Padding(
@@ -113,13 +113,13 @@ class DashData extends StatelessWidget {
             children: [
               Text(value == -1 ? "..." : "$value", style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                 fontFamily: appDefaultFont,
-                color: Get.theme.colorScheme.onPrimaryContainer,
+                color: Theme.of(context).colorScheme.inverseSurface,
                 fontWeight: FontWeight.bold
               )),
               const SizedBox(height: 4),
               Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontFamily: appDefaultFont,
-                color: Get.theme.colorScheme.onPrimaryContainer.withOpacity(0.6),
+                color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
               )),
             ],
           )
@@ -141,13 +141,13 @@ class DashIncidentReports extends StatelessWidget {
 
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: Get.theme.brightness == Brightness.light ?
-        Get.theme.colorScheme.onInverseSurface :
-        Get.theme.colorScheme.surfaceVariant,
+      color: Theme.of(context).brightness == Brightness.light ?
+        Theme.of(context).colorScheme.onInverseSurface :
+        Theme.of(context).colorScheme.surfaceVariant,
       child: InkWell(
         onTap: () {
-          Get.find<MainController>().pageStack.add(2);
-          Get.find<MainController>().pageIndex.value = 2;
+          Get.find<MainController>().pageStack.add(3);
+          Get.find<MainController>().pageIndex.value = 3;
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -158,9 +158,9 @@ class DashIncidentReports extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Incident Reports", style: Get.theme.textTheme.titleLarge!.copyWith(
+                  Text("Incident Reports", style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontFamily: appDefaultFont,
-                    color: Get.theme.colorScheme.onPrimaryContainer,
+                    color: Theme.of(context).colorScheme.inverseSurface,
                     fontWeight: FontWeight.bold
                   )),
                   const Spacer(),
@@ -178,7 +178,7 @@ class DashIncidentReports extends StatelessWidget {
                           '${dash.year.value}',
                           style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontFamily: appDefaultFont,
-                            color: Get.theme.colorScheme.onPrimaryContainer.withOpacity(0.7),
+                            color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7),
                           )
                         )),
                       );
@@ -203,7 +203,7 @@ class DashIncidentReports extends StatelessWidget {
                         },
                         child: Obx(() => Text(dash.isQuarter12.value ? 'Q1-2' : 'Q3-4', style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontFamily: appDefaultFont,
-                          color: Get.theme.colorScheme.onPrimaryContainer.withOpacity(0.7),
+                          color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.7),
                         ))),
                       );
                     },
@@ -239,7 +239,7 @@ class DashIncidentReports extends StatelessWidget {
                           return BarTooltipItem(
                             rod.toY.round().toString(),
                             TextStyle(
-                              color: Get.theme.colorScheme.onPrimaryContainer,
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
                               fontWeight: FontWeight.bold,
                             ),
                           );
@@ -262,7 +262,7 @@ class DashIncidentReports extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                                   fontFamily: appDefaultFont,
                                   fontWeight: FontWeight.bold,
-                                  color: Get.theme.colorScheme.onPrimaryContainer.withOpacity(0.6),
+                                  color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
                                 )
                               )
                             );
@@ -282,7 +282,7 @@ class DashIncidentReports extends StatelessWidget {
                                 Global.months[value.toInt() + (dash.isQuarter12.value ? 0 : 6)].toString(),
                                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                                   fontFamily: appDefaultFont,
-                                  color: Get.theme.colorScheme.onPrimaryContainer.withOpacity(0.6),
+                                  color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
                                 )
                               ))
                             );
@@ -299,13 +299,13 @@ class DashIncidentReports extends StatelessWidget {
                       barRods: [
                         BarChartRodData(
                           toY: dash.incidents[index].toDouble(),
-                          color: Get.theme.colorScheme.primary,
+                          color: Theme.of(context).colorScheme.primary,
                           width: 20,
                           borderRadius: BorderRadius.circular(11),
                           backDrawRodData: BackgroundBarChartRodData(
                             show: true,
                             toY: 10,
-                            color: Get.theme.colorScheme.primary.withOpacity(0.1),
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                           ),
                         ),
                       ],

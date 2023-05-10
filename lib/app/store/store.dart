@@ -2,6 +2,7 @@ import 'package:get_storage/get_storage.dart';
 
 enum StoreKeys {
   loginToken("login_token"),
+  theme("theme"),
   user("user");
 
   const StoreKeys(this.value);
