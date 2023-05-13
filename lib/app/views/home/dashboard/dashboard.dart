@@ -101,11 +101,13 @@ class DashData extends StatelessWidget {
               duration: const Duration(milliseconds: 210),
               curve: Curves.easeInOut
             );
-          } else {
-            await Get.find<MainController>().fetchFireDepartments();
-            Get.find<MainController>().pageStack.add(2);
-            Get.find<MainController>().pageIndex.value = 2;
+
+            return;
           }
+
+          await Get.find<MainController>().fetchFireDepartments();
+          Get.find<MainController>().pageStack.add(2);
+          Get.find<MainController>().pageIndex.value = 2;
         },
         child: Padding(
           padding: const EdgeInsets.all(24.0),

@@ -33,10 +33,10 @@ class FireDepartmentsView extends StatelessWidget {
       );
     }
 
-    // Get the average latitude and longitude
     double x = 0;
     double y = 0;
     
+    /// Calculate the centroid of the fire department coordinates
     for (FireDepartmentModel dept in deptController.fireDepartments) {
       x += dept.latitude;
       y += dept.longitude;

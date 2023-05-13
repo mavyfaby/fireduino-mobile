@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
     Get.put(FireduinosController());
     Get.put(FireDepartmentsController());
 
-
     return GetMaterialApp(
       title: appName,
       initialRoute: '/main',

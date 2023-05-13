@@ -10,8 +10,20 @@ class FireduinoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RxString status = "Waiting for user...".obs;
-    final RxString mainStatus = "Extinguish".obs;
+    final isExtinguishing = false.obs;
+    final mainStatus = Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0 ?
+      'Extinguish'.obs :
+      "Offline".obs;
+
+    Global.onlineFireduinos.listen((p0) { 
+      if (p0.indexWhere((el) => el["mac"] == Get.parameters['mac']) < 0) {
+        mainStatus.value = "Offline";
+        isExtinguishing.value = false;
+        return;
+      } 
+
+      mainStatus.value = "Extinguish";
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +31,7 @@ class FireduinoPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -34,64 +46,42 @@ class FireduinoPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("MAC Address: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
-                  Text(Get.parameters["mac"]!, style: Theme.of(context).textTheme.titleMedium),
+                  const Text("Status: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
+                  Obx(() => Text(Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0 ? 'Online' : 'Offline', style: Theme.of(context).textTheme.titleMedium)),
                 ],
               ),
               const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Status: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
-                  Obx(() => Text(status.value, style: Theme.of(context).textTheme.titleMedium)),
+                  const Text("MAC Address: ", style: TextStyle(letterSpacing: 0, fontSize: 16)),
+                  Text(Get.parameters["mac"]!, style: Theme.of(context).textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 64),
               Obx(() => FireduinoStatus(isOnline: Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0)),
               const SizedBox(height: 64),
-              GestureDetector(
-                onTapDown: (TapDownDetails details) {
-                  debugPrint("DOWN");
-                  mainStatus.value = "Extinguishing...";
-                  status.value = "Extinguishing...";
-                },
-                onTapUp: (TapUpDetails details) {
-                  debugPrint("UP");
-                  mainStatus.value = "Extinguish";
-                  status.value = "Extinguished";
-                },
-                onTapCancel: () {
-                  debugPrint("CANCEL");
-                  mainStatus.value = "Extinguish";
-                  status.value = "Cancelled";
-                },
-                child: Container(
-                  width: 275,
-                  height: 275,
-                  decoration: BoxDecoration(
-                    color: Get.theme.brightness == Brightness.light ?
-                      Get.theme.colorScheme.primary :
-                      Get.theme.colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(150),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Get.theme.brightness == Brightness.light ?
-                          Get.theme.colorScheme.primary.withOpacity(0.5) :
-                          Get.theme.colorScheme.primaryContainer.withOpacity(0.5),
-                        blurRadius: 16,
-                        offset: const Offset(0, 8)
-                      )
-                    ]
-                  ),
-                  child: Center(
-                    child: Obx(() => Text(mainStatus.value, style: Get.textTheme.headlineMedium!.copyWith(
-                      fontFamily: appDefaultFont,
-                      color: Get.theme.brightness == Brightness.light ?
-                        Get.theme.colorScheme.onPrimary :
-                        Get.theme.colorScheme.onPrimaryContainer
-                    )))
-                  ),
-                )
+              SizedBox(
+                width: 275,
+                height: 275,
+                child: Obx(() => FilledButton(
+                  onPressed: Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0 ? () {
+                    if (isExtinguishing.value) {
+                      mainStatus.value = "Extinguish";
+                      isExtinguishing.value = false;
+                      return;
+                    }
+    
+                    mainStatus.value = "Extinguishing...";
+                    isExtinguishing.value = true;
+                  } : null,
+                  child: Text(mainStatus.value, style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontFamily: appDefaultFont,
+                    color: Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0 ?
+                      Theme.of(context).colorScheme.onPrimary :
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5)
+                  ))
+                )),
               )
             ],
           ),

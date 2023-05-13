@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 
+import '../store/store.dart';
 import '../models/user.dart';
 import 'request.dart';
-
-import '../store/store.dart';
 
 class FireduinoAuth {
   static final isAuthenticated = false.obs;
