@@ -3,4 +3,5 @@ import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   final Rx<ThemeMode> themeMode = ThemeMode.system.obs;
+  final username = ''.obs;
 }

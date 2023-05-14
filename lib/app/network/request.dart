@@ -387,4 +387,35 @@ class FireduinoAPI {
       return false;
     }
   }
+
+  /// Update user
+  static Future<bool> updateUser(int type, String value) async {
+    // Declare form data
+    final formData = {
+      'token': Global.token,
+      'type': type,
+      'value': value,
+    };
+
+    try {
+      /// Update user
+      Response response = await _connect.put(FireduinoEndpoints.user, formData, contentType: 'application/x-www-form-urlencoded',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
 }
