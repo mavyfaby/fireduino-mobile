@@ -13,6 +13,11 @@ class MainController extends GetxController {
   final pageStack = [1];
   final pageIndex = 1.obs;
 
+  // Login History
+  final loginHistoryList = [].obs;
+  final loginSortColumnIndex = 1.obs;
+  final loginSortAscending = false.obs;
+
   void logout() async {
     // Clear user data
     Store.remove(StoreKeys.user);
@@ -51,5 +56,36 @@ class MainController extends GetxController {
 
     // Set fire departments
     Get.find<FireDepartmentsController>().fireDepartments.assignAll(departments);
-}
+  }
+
+  Future<void> fetchLoginHistory({ bool isShowLoader = true }) async {
+    // Show dialog that we are fetching the latest login history
+    if (isShowLoader) {
+      showLoader("Fetching login history...");
+    }
+
+    // Fetch latest login history
+    List<List<String>>? loginHistory = await FireduinoAPI.fetchLoginHistory();
+
+    // Hide loader
+    if (isShowLoader) {
+      Get.back();
+    }
+
+    // If result is null
+    if (loginHistory == null) {
+      // Show error
+      showAppDialog("Error ", "Failed to fetch login history");
+      return;
+    }
+
+    // If result is empty
+    if (loginHistory.isEmpty) {
+      // Show error
+      showAppDialog("Error ", "No login history found");
+    }
+
+    // Set login history
+    loginHistoryList.assignAll(loginHistory);
+  }
 }

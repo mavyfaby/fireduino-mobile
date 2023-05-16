@@ -8,6 +8,7 @@ import '../store/global.dart';
 import '../models/establishment.dart';
 import '../models/user.dart';
 
+import '../utils/date.dart';
 import 'endpoints.dart';
 
 // GetConnect instance
@@ -416,6 +417,50 @@ class FireduinoAPI {
       return false;
     } on TimeoutException {
       return false;
+    }
+  }
+
+  /// Fetch login history
+  static Future<List<List<String>>?> fetchLoginHistory() async {
+    try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.history,
+        query: {
+          "type": 'login'
+        },
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Extract login history
+        final List<List<String>> loginHistory = [];
+
+        // For each login history
+        for (final history in response.body['data']) {
+          // Get date stasmp
+          final date = DateTime.parse(history['date_stamp']);
+          // Add to list
+          loginHistory.add([ getDate(date), getTime(date) ]);
+        }
+
+        // Return config
+        return loginHistory;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
     }
   }
 }

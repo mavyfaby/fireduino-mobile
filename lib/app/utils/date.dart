@@ -64,3 +64,59 @@ List<int> getYears() {
   // Return years
   return years;
 }
+
+/// Get time from DateTime (ex. 12:00 AM)
+String getTime(DateTime datetime) {
+  // If datetime is utc
+  if (datetime.isUtc) {
+    // Convert to local
+    datetime = datetime.toLocal();
+  }
+
+  // Get hour
+  String hour = datetime.hour.toString();
+  // Get minute
+  String minute = datetime.minute.toString();
+  // Get AM/PM
+  String ampm = datetime.hour > 12 ? 'PM' : 'AM';
+
+  // If hour is greater than 12
+  if (datetime.hour > 12) {
+    // Subtract 12
+    hour = (datetime.hour - 12).toString();
+  }
+
+  // If hour is 0
+  if (datetime.hour == 0) {
+    // Set to 12
+    hour = '12';
+  }
+
+  // If minute is less than 10
+  if (datetime.minute < 10) {
+    // Add 0
+    minute = '0$minute';
+  }
+
+  // Return time
+  return '$hour:$minute $ampm';
+}
+
+/// Get date from DateTime (ex. Mar 1, 2023)
+String getDate(DateTime datetime) {
+  // If datetime is utc
+  if (datetime.isUtc) {
+    // Convert to local
+    datetime = datetime.toLocal();
+  }
+
+  // Get month
+  String month = months[datetime.month - 1];
+  // Get day
+  String day = datetime.day.toString();
+  // Get year
+  String year = datetime.year.toString();
+
+  // Return date
+  return '$month $day, $year';
+}

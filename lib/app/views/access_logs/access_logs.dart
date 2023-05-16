@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AccessLogsView extends StatelessWidget {
   const AccessLogsView({super.key});

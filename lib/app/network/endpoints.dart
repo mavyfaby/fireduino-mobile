@@ -11,4 +11,5 @@ class FireduinoEndpoints {
   static String departments = "$webServerApi/departments";
   static String fireduino = "$webServerApi/fireduino";
   static String fireduinos = "$webServerApi/fireduinos";
+  static String history = "$webServerApi/history";
 }
