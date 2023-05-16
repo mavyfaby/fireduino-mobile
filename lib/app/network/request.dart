@@ -502,4 +502,36 @@ class FireduinoAPI {
       return null;
     }
   }
+
+  /// Add access log
+  static Future<bool> addAccessLog(int id) async {
+    // Declare form data
+    final formData = {
+      'id': id,
+    };
+
+    try {
+      /// Add access log
+      Response response = await _connect.post(FireduinoEndpoints.access, formData,
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      print(response.statusCode);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
 }

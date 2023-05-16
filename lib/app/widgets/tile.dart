@@ -1,8 +1,10 @@
+import 'package:fireduino/app/network/request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FireduinoTile extends StatelessWidget {
   const FireduinoTile({
+    required this.id,
     required this.index,
     required this.name,
     required this.mac,
@@ -10,6 +12,7 @@ class FireduinoTile extends StatelessWidget {
     super.key
   });
 
+  final int id;
   final int index;
   final String name;
   final String mac;
@@ -24,6 +27,9 @@ class FireduinoTile extends StatelessWidget {
         Get.theme.colorScheme.surfaceVariant,
       child: InkWell(
         onTap: () {
+          // Log device access to database
+          FireduinoAPI.addAccessLog(id);
+          // Navigate to device page
           Get.toNamed("/fireduino", parameters: {
             "name": name,
             "mac": mac

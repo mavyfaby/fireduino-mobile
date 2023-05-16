@@ -42,7 +42,7 @@ class AccessLogsTable extends StatelessWidget {
           cardTheme: Theme.of(context).cardTheme.copyWith(
             color: Theme.of(context).brightness == Brightness.light ?
               Theme.of(context).colorScheme.onInverseSurface :
-              Theme.of(context).colorScheme.surfaceVariant,
+              Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.7),
           ),
           dividerTheme: Theme.of(context).dividerTheme.copyWith(
             color: Theme.of(context).brightness == Brightness.light ?

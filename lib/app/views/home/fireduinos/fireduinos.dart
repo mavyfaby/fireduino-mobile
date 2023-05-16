@@ -51,6 +51,7 @@ class FireduinosPage extends StatelessWidget {
                       itemCount: fireduinoCtrl.count,
                       itemBuilder: (context, index) {
                         return Obx(() => FireduinoTile(
+                          id: fireduinoCtrl.devices[index].id,
                           name: fireduinoCtrl.devices[index].name,
                           mac: fireduinoCtrl.devices[index].mac,
                           isOnline: Global.onlineFireduinos.indexWhere((el) => el["mac"] == fireduinoCtrl.devices[index].mac) >= 0,
