@@ -74,6 +74,11 @@ class MainPage extends StatelessWidget {
               await Get.find<MainController>().fetchFireDepartments();
             }
 
+            // If selecting access logs
+            if (index == 4) {
+              await Get.find<MainController>().fetchAccessLogs();
+            }
+
             // If selecting login history
             if (index == 6) {
               await Get.find<MainController>().fetchLoginHistory();

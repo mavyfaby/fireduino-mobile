@@ -50,8 +50,8 @@ class HomePage extends StatelessWidget {
                 );
               },
               isSelected: homeController.pageIndex.value == 0,
-              icon: const Icon(Icons.dashboard_outlined),
-              selectedIcon: const Icon(Icons.dashboard_rounded),
+              icon: const Icon(Icons.dashboard_outlined, size: 28),
+              selectedIcon: const Icon(Icons.dashboard_rounded, size: 28),
             ),
             const SizedBox(width: 8),
             IconButton(
@@ -63,8 +63,8 @@ class HomePage extends StatelessWidget {
                 );
               },
               isSelected: homeController.pageIndex.value == 1,
-              icon: const Icon(Icons.fireplace_outlined),
-              selectedIcon: const Icon(Icons.fireplace_rounded),
+              icon: const Icon(Icons.fireplace_outlined, size: 28),
+              selectedIcon: const Icon(Icons.fireplace_rounded, size: 28),
             ),
           ],
         ))

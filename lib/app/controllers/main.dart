@@ -18,6 +18,11 @@ class MainController extends GetxController {
   final loginSortColumnIndex = 1.obs;
   final loginSortAscending = false.obs;
 
+  // Access Logs
+  final accessLogsList = [].obs;
+  final accessLogsSortColumnIndex = 1.obs;
+  final accessLogsSortAscending = false.obs;
+
   void logout() async {
     // Clear user data
     Store.remove(StoreKeys.user);
@@ -87,5 +92,36 @@ class MainController extends GetxController {
 
     // Set login history
     loginHistoryList.assignAll(loginHistory);
+  }
+
+  Future<void> fetchAccessLogs({ bool isShowLoader = true }) async {
+    // Show dialog that we are fetching the latest access logs
+    if (isShowLoader) {
+      showLoader("Fetching access logs...");
+    }
+
+    // Fetch latest access logs
+    List<List<String>>? accessLogs = await FireduinoAPI.fetchAccessLogs();
+
+    // Hide loader
+    if (isShowLoader) {
+      Get.back();
+    }
+
+    // If result is null
+    if (accessLogs == null) {
+      // Show error
+      showAppDialog("Error ", "Failed to fetch access logs");
+      return;
+    }
+
+    // If result is empty
+    if (accessLogs.isEmpty) {
+      // Show error
+      showAppDialog("Error ", "No access logs found");
+    }
+
+    // Set access logs
+    accessLogsList.assignAll(accessLogs);
   }
 }

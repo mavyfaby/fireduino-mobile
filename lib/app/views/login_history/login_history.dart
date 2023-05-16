@@ -50,7 +50,7 @@ class LoginHistoryTable extends StatelessWidget {
               Theme.of(context).colorScheme.outline.withOpacity(0.4),
           ),
         ),
-        child: PaginatedDataTable(
+        child: Obx(() => PaginatedDataTable(
           sortColumnIndex: Get.find<MainController>().loginSortColumnIndex.value,
           sortAscending: Get.find<MainController>().loginSortAscending.value,
           rowsPerPage: 10,
@@ -59,7 +59,7 @@ class LoginHistoryTable extends StatelessWidget {
             DataColumn(label: const Text('Time'), onSort: onSort),
           ],
           source: _DataSource(data),
-        ),
+        )),
       ),
     );
   }

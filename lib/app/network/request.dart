@@ -463,4 +463,43 @@ class FireduinoAPI {
       return null;
     }
   }
+
+  /// Fetch access logs
+  static Future<List<List<String>>?> fetchAccessLogs() async {
+    try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.accessLogs,
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Extract access logs
+        final List<List<String>> accessLogs = [];
+
+        // For each access log
+        for (final accessLog in response.body['data']) {
+          // Add to list
+          accessLogs.add([ accessLog['name'], getReadableDate(DateTime.parse(accessLog['date_stamp'])) ]);
+        }
+
+        // Return config
+        return accessLogs;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
 }

@@ -1,313 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/main.dart';
 
 class AccessLogsView extends StatelessWidget {
   const AccessLogsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mainController = Get.find<MainController>();
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              '150 total number of access Fireduino Logs',
-              style: TextStyle(
-                fontSize: 12,
-                height: 5
-              ),
-            ),
-            Container(
-              width: 350,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                            ),
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold
-                              )
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10,left: 10,bottom: 10, right: 20),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fireduino 1',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 12,
-                                
-                              ),
-                            ),
-                            Text(
-                              'Last accessed 10 mins ago',
-                              style: TextStyle(
-                                fontSize: 10
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          'Maverick Fabroa',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              child: const Text(''),
-            ),
-
-            Container(
-              width: 350,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                            ),
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold
-                              )
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10,left: 10,bottom: 10, right: 20),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fireduino 2',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 12,
-                                
-                              ),
-                            ),
-                            Text(
-                              'Last accessed 54 mins ago',
-                              style: TextStyle(
-                                fontSize: 10
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          'Christine Lange',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              child: const Text(''),
-            ),
-
-            Container(
-              width: 350,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                            ),
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold
-                              )
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10,left: 10,bottom: 10, right: 20),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fireduino 3',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 12,
-                                
-                              ),
-                            ),
-                            Text(
-                              'Last accessed 2 hours ago',
-                              style: TextStyle(
-                                fontSize: 10
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          'Maverick Fabroa',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-
-            Container(
-              child: const Text(''),
-            ),
-
-            Container(
-              width: 350,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                            ),
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold
-                              )
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10,left: 10,bottom: 10, right: 20),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fireduino 4',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 12,
-                                
-                              ),
-                            ),
-                            Text(
-                              'Last accessed 5 hours ago',
-                              style: TextStyle(
-                                fontSize: 10
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          'Jewel Cedrick Gesim',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+      body: RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+        onRefresh: () async {
+          await Get.find<MainController>().fetchAccessLogs(isShowLoader: false);
+        },
+        child: SizedBox.expand(
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            // ignore: invalid_use_of_protected_member
+            child: Obx(() => AccessLogsTable(data: mainController.accessLogsList.value)),
+          ),
         ),
       ),
     );
   }
+}
+
+class AccessLogsTable extends StatelessWidget {
+  const AccessLogsTable({ required this.data, super.key });
+
+  final List<dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          cardTheme: Theme.of(context).cardTheme.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ?
+              Theme.of(context).colorScheme.onInverseSurface :
+              Theme.of(context).colorScheme.surfaceVariant,
+          ),
+          dividerTheme: Theme.of(context).dividerTheme.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ?
+              Theme.of(context).colorScheme.outlineVariant :
+              Theme.of(context).colorScheme.outline.withOpacity(0.4),
+          ),
+        ),
+        child: Obx(() => PaginatedDataTable(
+          sortColumnIndex: Get.find<MainController>().accessLogsSortColumnIndex.value,
+          sortAscending: Get.find<MainController>().accessLogsSortAscending.value,
+          rowsPerPage: 10,
+          columns: <DataColumn>[
+            DataColumn(label: const Text('Device Name'), onSort: onSort),
+            DataColumn(label: const Text('Date & Time'), onSort: onSort),
+          ],
+          source: _DataSource(data),
+        )),
+      ),
+    );
+  }
+
+  /// Sort table
+  void onSort(int columnIndex, bool ascending) {
+    Get.find<MainController>().accessLogsSortAscending.value = ascending;
+    Get.find<MainController>().accessLogsSortColumnIndex.value = columnIndex;
+
+    if (Get.find<MainController>().accessLogsSortColumnIndex.value == 0) {
+      data.sort((a, b) => a[0].compareTo(b[0]));
+    } else if (Get.find<MainController>().accessLogsSortColumnIndex.value == 1) {
+      data.sort((a, b) => a[1].compareTo(b[1]));
+    }
+
+    if (!Get.find<MainController>().accessLogsSortAscending.value) {
+      data.assignAll(data.reversed.toList());
+    }
+  }
+}
+
+class _DataSource extends DataTableSource {
+
+  _DataSource(this.data);
+
+  final List<dynamic> data;
+
+  @override
+  DataRow getRow(int index) {
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text(data[index][0])),
+        DataCell(Text(data[index][1])),
+      ],
+    );
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 0;
 }
