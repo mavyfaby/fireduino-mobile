@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 
+import '../network/socket.dart';
 import '../models/dashboard.dart';
 import '../models/department.dart';
 import '../models/fireduino.dart';
@@ -219,7 +220,7 @@ class FireduinoAPI {
   }
 
   /// Add fireduino
-  static Future<bool> addFireduino(int estbID, String mac, String name) async {
+  static Future<bool> addFireduino(int estbID, String socketId, String mac, String name) async {
     try {
       // Declare form data
       final formData = {
@@ -241,7 +242,15 @@ class FireduinoAPI {
       /// If the response is successful
       if (response.statusCode == 200) {
         // Return status
-        return response.body['success'];
+        bool success = response.body['success'];
+
+        // If success
+        if (success) {
+          // Emit fireduino add to socket
+          FireduinoSocket.instance.addFireduino(socketId, estbID);
+        }
+  
+        return success;
       }
 
       return false;

@@ -108,8 +108,8 @@ class AddFireduinoPage extends StatelessWidget {
                       // Reset the error text
                       errorText.value = "";
                       // Check the mac address
-                      checkMacAddress(homeController.mac.text, false, (isAvailable) {
-                        if (isAvailable == null || isAvailable) {
+                      checkMacAddress(homeController.mac.text, false, (socketId) {
+                        if (socketId == null || socketId.toString().isNotEmpty) {
                           return;
                         }
     
@@ -126,9 +126,9 @@ class AddFireduinoPage extends StatelessWidget {
                       errorText.value = "";
                       nameErrorText.value = "";
                       // Check the mac address
-                      checkMacAddress(homeController.mac.text, true, (isAvailable) async {
+                      checkMacAddress(homeController.mac.text, true, (socketId) async {
                         // Check if the server is available
-                        if (isAvailable == null) {
+                        if (socketId == null) {
                           return;
                         }
     
@@ -140,12 +140,12 @@ class AddFireduinoPage extends StatelessWidget {
                         }
                         
                         // Check if the device is available
-                        if (isAvailable) {
+                        if (socketId.toString().isNotEmpty) {
                           // Show the loading dialog
                           showLoader("Adding fireduino device...");
     
                           // Add the fireduino device
-                          if (await FireduinoAPI.addFireduino(Global.user.eid!, homeController.mac.text, homeController.name.text)) {
+                          if (await FireduinoAPI.addFireduino(Global.user.eid!, socketId, homeController.mac.text, homeController.name.text)) {
                             // Hide the loading dialog
                             Get.back();
                             // If success, show dialog
@@ -188,30 +188,26 @@ class AddFireduinoPage extends StatelessWidget {
     // Show the loading dialog
     showLoader("Checking MAC Address...");
     // Check the fireduino device
-    FireduinoSocket.instance.checkFireduino(mac, (isAvailable) async {
+    FireduinoSocket.instance.checkFireduino(mac, (socketId) async {
       // Hide the loading dialog
       Get.back();
 
       // Check if the server is available
-      if (isAvailable == null) {
+      if (socketId == null) {
         // Show the error dialog
         showAppDialog("Error", "Server not available.");
         callback(null);
+        return;
       }
 
       // Check if the device is available and is not from the add button
-      if (isAvailable && !isAdd) {
+      if (socketId.toString().isNotEmpty && !isAdd) {
         // Show the dialog
         await showAppDialog("Checking Success!", "Fireduino device is available!");
       }
 
-      // Check if the device is connected
-      if (isAvailable) {
-        callback(true);
-        return;
-      }
-
-      callback(false);
+      // Callback socket id
+      callback(socketId);
     }, isExoduino: true);
   }
 }

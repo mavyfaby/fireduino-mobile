@@ -135,6 +135,15 @@ class FireduinoSocket {
     }
   }
 
+  void addFireduino(String socketId, int establishmentId) {
+    if (socket != null) {
+      socket!.emit('add_fireduino', {
+        'sid': socketId,
+        'eid': establishmentId,
+      });
+    }
+  }
+
   /// Set online fireduino devices
   void setOnlineFireduinos(List<dynamic> data) {
     // List of devices
