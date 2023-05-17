@@ -98,7 +98,7 @@ class FireduinoSocket {
   }
 
   /// Check fireduino device status
-  void checkFireduino(String mac, Function callback) {
+  void checkFireduino(String mac, Function callback, { bool isExoduino = false }) {
     // Ensure that the socket is connected
     if (socket == null || !socket!.connected) {
       // Log that we are not connected
@@ -109,19 +109,30 @@ class FireduinoSocket {
 
     debugPrint("Checking fireduino device with MAC Address: $mac");
 
+    // Event name
+    String eventName = "fireduino_check";
+
+    // If is exoduino
+    if (isExoduino) {
+      // Set the event name
+      eventName = "exoduino_check";
+    }
+
     // Off the fireduino-check event
-    socket!.off('fireduino_check');
+    socket!.off(eventName);
     // Emit the fireduino-check event
-    socket!.emit('fireduino_check', mac);
+    socket!.emit(eventName, mac);
     // Listen for the fireduino-check event
-    socket!.on('fireduino_check', (data) {
+    socket!.on(eventName, (data) {
       // Call the callback function
       callback(data);
     });
-  }
+  }  
 
   void getOnlineFireduinos() {
-    socket!.emit('get_online_fireduinos');
+    if (socket != null) {
+      socket!.emit('get_online_fireduinos');
+    }
   }
 
   /// Set online fireduino devices

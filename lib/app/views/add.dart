@@ -212,6 +212,6 @@ class AddFireduinoPage extends StatelessWidget {
       }
 
       callback(false);
-    });
+    }, isExoduino: true);
   }
 }
