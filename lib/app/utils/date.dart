@@ -5,11 +5,10 @@ const List<String> months = [
 ];
 
 /// Convert DateTime to readable date (ex. January 1, 2023 at 12:00 AM)
-String getReadableDate(DateTime datetime) {
-  // If datetime is utc
-  if (datetime.isUtc) {
-    // Convert to local
-    datetime = datetime.toLocal();
+String getReadableDate(DateTime datetime, { bool isUtc = true }) {
+  // If Utc
+  if (isUtc) {
+    datetime = datetime.add(const Duration(hours: 8)); // GMT+8
   }
 
   // Get month

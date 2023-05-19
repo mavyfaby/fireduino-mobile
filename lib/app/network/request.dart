@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:get/get.dart';
 
+import '../models/incident.dart';
 import '../network/socket.dart';
 import '../models/dashboard.dart';
 import '../models/department.dart';
@@ -545,6 +547,45 @@ class FireduinoAPI {
     }
   }
 
+  /// Get incident reports
+  static Future<List<IncidentReport>?> fetchIncidentReports() async {
+    try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.incidentReports,
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Extract incident reports
+        final List<IncidentReport> incidentReports = [];
+
+        // For each incident report
+        for (final incidentReport in response.body['data']) {
+          // Add to list
+          incidentReports.add(IncidentReport.fromJson(incidentReport));
+        }
+
+        // Return config
+        return incidentReports;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
+
   /// Add access log
   static Future<bool> addAccessLog(int id) async {
     // Declare form data
@@ -563,7 +604,68 @@ class FireduinoAPI {
       // Set data
       setData(response);
 
-      print(response.statusCode);
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
+
+  /// Add incident report
+  static Future<bool> addIncidentReport(int id, String report) async {
+    // Convert report to base64
+    final reportBase64 = base64Encode(utf8.encode(report));
+
+    try {
+      /// Add incident report
+      Response response = await _connect.post(FireduinoEndpoints.incidentReport, {
+        'incidentID': id,
+        'report': reportBase64,
+      },
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
+
+  /// Edit incident report
+  static Future<bool> editIncidentReport(int incidentID, int reportID, String report) async {
+    // Convert report to base64
+    final reportBase64 = base64Encode(utf8.encode(report));
+
+    try {
+      /// Add incident report
+      Response response = await _connect.put(FireduinoEndpoints.incidentReport, {
+        'incidentID': incidentID,
+        'reportID': reportID,
+        'report': reportBase64,
+      },
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
 
       /// If the response is successful
       if (response.statusCode == 200) {

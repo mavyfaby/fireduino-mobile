@@ -7,6 +7,7 @@ import '../views/scan.dart';
 import '../views/signup.dart';
 import '../views/profile.dart';
 
+import '../views/incident_reports/incident.dart';
 import '../views/home/fireduinos/fireduino/fireduino.dart';
 
 import 'middlewares.dart';
@@ -38,6 +39,10 @@ class Routes {
       GetPage(
         name: '/fireduino',
         page: () => const FireduinoPage()
+      ),
+      GetPage(
+        name: '/incident',
+        page: () => const IncidentPage()
       ),
       GetPage(
         name: '/profile',

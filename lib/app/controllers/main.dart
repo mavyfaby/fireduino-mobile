@@ -1,3 +1,5 @@
+import 'package:fireduino/app/models/incident.dart';
+import 'package:fireduino/app/utils/snackbar.dart';
 import 'package:get/get.dart';
 
 import '../models/department.dart';
@@ -22,6 +24,13 @@ class MainController extends GetxController {
   final accessLogsList = [].obs;
   final accessLogsSortColumnIndex = 1.obs;
   final accessLogsSortAscending = false.obs;
+
+  // Incident Reports
+  final incidentReportsList = <IncidentReport>[].obs;
+  IncidentReport? openedIncidentReport;
+  int? openedIncidentReportId;
+  bool? isReportEditing;
+
 
   void logout() async {
     // Clear user data
@@ -49,7 +58,7 @@ class MainController extends GetxController {
     // If result is null
     if (departments == null) {
       // Show error
-      showAppDialog("Error ", "Failed to fetch fire departments");
+      showAppDialog("Error ", FireduinoAPI.message);
       return;
     }
 
@@ -80,7 +89,7 @@ class MainController extends GetxController {
     // If result is null
     if (loginHistory == null) {
       // Show error
-      showAppDialog("Error ", "Failed to fetch login history");
+      showAppDialog("Error ", FireduinoAPI.message);
       return;
     }
 
@@ -111,7 +120,7 @@ class MainController extends GetxController {
     // If result is null
     if (accessLogs == null) {
       // Show error
-      showAppDialog("Error ", "Failed to fetch access logs");
+      showAppDialog("Error ", FireduinoAPI.message);
       return;
     }
 
@@ -123,5 +132,36 @@ class MainController extends GetxController {
 
     // Set access logs
     accessLogsList.assignAll(accessLogs);
+  }
+
+  Future<void> fetchIncidentReports({ bool isShowLoader = true}) async {
+    // Show dialog that we are fetching the latest incident reports
+    if (isShowLoader) {
+      showLoader("Fetching incident reports...");
+    }
+    
+    // Fetch latest incident reports
+    List<IncidentReport>? incidentReports = await FireduinoAPI.fetchIncidentReports();
+
+    // Hide loader
+    if (isShowLoader) {
+      Get.back();
+    }
+
+    // If result is null
+    if (incidentReports == null) {
+      // Show error
+      showAppDialog("Error ", FireduinoAPI.message);
+      return;
+    }
+
+    // If result is empty
+    if (incidentReports.isEmpty) {
+      // Show error
+      showAppSnackbar("No incident reports found");
+    }
+
+    // Set incident reports
+    incidentReportsList.assignAll(incidentReports);
   }
 }
