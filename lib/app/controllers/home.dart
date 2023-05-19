@@ -8,4 +8,8 @@ class HomeController extends GetxController {
   // MAC address and name of the fireduino device in the Add Fireduino view
   final TextEditingController mac = TextEditingController();
   final TextEditingController name = TextEditingController();
+
+  // Name of the fireduino device in the Fireduino view
+  final fireduinoName = "".obs;
+  final fireduinoEditNameMessage = "".obs;
 }

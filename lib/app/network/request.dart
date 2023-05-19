@@ -257,7 +257,40 @@ class FireduinoAPI {
     } on TimeoutException {
       return false;
     }
-  }   
+  }
+
+  /// Edit fireduino
+  static Future<bool> editFireduino(int estbID, int deviceId, String mac, String name) async {
+    try {
+      // Declare form data
+      final formData = {
+        'estbID': estbID,
+        'deviceID': deviceId,
+        'mac': mac,
+        'name': name,
+      };
+
+      /// Get the config from the server.
+      Response response = await _connect.put(FireduinoEndpoints.fireduino, formData,
+        contentType: 'application/x-www-form-urlencoded',
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        }
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // Return status
+        return response.body['success'];
+      }
+
+      return false;
+    } on TimeoutException {
+      return false;
+    }
+  }
 
   /// Fetches fireduinos from the server
   static Future<List<FireduinoModel>?> fetchFireduinos() async {

@@ -1,9 +1,9 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:fireduino/app/utils/theme.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../utils/theme.dart';
 import '../models/user.dart';
 import 'store.dart';
 

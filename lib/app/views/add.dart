@@ -65,12 +65,13 @@ class AddFireduinoPage extends StatelessWidget {
                 decoration: CustomInputDecoration(
                   context: context,
                   labelText: "Name",
+                  outlined: true,
                   prefixIcon: const Icon(Icons.fireplace_outlined),
                   errorText: nameErrorText.value.isEmpty ? null : nameErrorText.value,
                 ),
               )),
               Obx(() => SizedBox(
-                height: nameErrorText.value.isEmpty ? 0 : 16,
+                height: nameErrorText.value.isNotEmpty ? 0 : 16,
               )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,6 +80,7 @@ class AddFireduinoPage extends StatelessWidget {
                     child: Obx(() => TextField(
                       controller: homeController.mac,
                       decoration: CustomInputDecoration(
+                        outlined: true,
                         context: context,
                         labelText: "MAC Address",
                         prefixIcon: const Icon(Icons.wifi_tethering_sharp),

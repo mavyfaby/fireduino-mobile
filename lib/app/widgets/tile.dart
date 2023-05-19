@@ -1,6 +1,7 @@
-import 'package:fireduino/app/network/request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../network/request.dart';
 
 class FireduinoTile extends StatelessWidget {
   const FireduinoTile({
@@ -32,6 +33,7 @@ class FireduinoTile extends StatelessWidget {
           // Navigate to device page
           Get.toNamed("/fireduino", parameters: {
             "name": name,
+            "id": "$id",
             "mac": mac
           });
         },

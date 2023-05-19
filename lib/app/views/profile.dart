@@ -120,7 +120,6 @@ class ProfilePage extends StatelessWidget {
             decoration: CustomInputDecoration(
               prefixIcon: const Icon(Icons.person_outline_rounded),
               context: Get.context!,
-              labelText: "New Username",
             ),
           ),
         ],

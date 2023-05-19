@@ -119,7 +119,7 @@ class DashData extends StatelessWidget {
                 fontWeight: FontWeight.bold
               )),
               const SizedBox(height: 4),
-              Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(
+              Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontFamily: appDefaultFont,
                 color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.6),
               )),

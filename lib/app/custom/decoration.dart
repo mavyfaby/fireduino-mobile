@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class CustomInputDecoration extends InputDecoration {
   CustomInputDecoration({
     required BuildContext context,
-    String labelText = "",
-    String helperText = "",
+    String? labelText,
+    String? helperText,
     String? errorText,
     Widget? prefixIcon,
     Widget? suffixIcon,
-    InputBorder? border,
+    bool outlined = false,
     bool? isDense,
   }) : super(
     labelText: labelText,
@@ -17,7 +17,7 @@ class CustomInputDecoration extends InputDecoration {
     isDense: isDense,
     helperText: helperText,
     errorText: errorText,
-    filled: Theme.of(context).brightness == Brightness.dark,  
-    border: border ?? (Theme.of(context).brightness == Brightness.dark ? null : const OutlineInputBorder()),
+    filled: Theme.of(context).brightness == Brightness.dark, 
+    border: Theme.of(context).brightness == Brightness.dark ? null : outlined ? const OutlineInputBorder() : null,
   );
 }
