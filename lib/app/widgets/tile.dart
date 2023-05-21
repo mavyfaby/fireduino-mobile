@@ -10,6 +10,7 @@ class FireduinoTile extends StatelessWidget {
     required this.name,
     required this.mac,
     required this.isOnline,
+    this.sid,
     super.key
   });
 
@@ -17,6 +18,7 @@ class FireduinoTile extends StatelessWidget {
   final int index;
   final String name;
   final String mac;
+  final String? sid;
   final bool isOnline;
 
   @override
@@ -34,6 +36,7 @@ class FireduinoTile extends StatelessWidget {
           Get.toNamed("/fireduino", parameters: {
             "name": name,
             "id": "$id",
+            "sid": sid ?? "",
             "mac": mac
           });
         },

@@ -8,6 +8,7 @@ import '../../../../controllers/fireduinos.dart';
 import '../../../../env/config.dart';
 import '../../../../store/global.dart';
 import '../../../../widgets/status.dart';
+import '../../../../network/socket.dart';
 
 class FireduinoPage extends StatelessWidget {
   const FireduinoPage({super.key});
@@ -91,14 +92,18 @@ class FireduinoPage extends StatelessWidget {
                   height: 275,
                   child: Obx(() => FilledButton(
                     onPressed: Global.onlineFireduinos.indexWhere((el) => el["mac"] == Get.parameters['mac']) >= 0 ? () {
+                      String socketID = getSocketID(Get.parameters['mac']!);
+                      
                       if (isExtinguishing.value) {
                         mainStatus.value = "Extinguish";
                         isExtinguishing.value = false;
+                        FireduinoSocket.instance.extinguish(socketID, 0);
                         return;
                       }
       
                       mainStatus.value = "Extinguishing...";
                       isExtinguishing.value = true;
+                      FireduinoSocket.instance.extinguish(socketID, 1);
                     } : null,
                     child: Text(mainStatus.value, style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                       fontFamily: appDefaultFont,
@@ -184,5 +189,18 @@ class FireduinoPage extends StatelessWidget {
       if (value == null) return;
       Get.parameters["name"] = value;
     });
+  }
+
+  String getSocketID(String mac) {
+    // Get the socket id of the fireduino
+    final fireduino = Global.onlineFireduinos.firstWhereOrNull((el) => el["mac"] == mac);
+    // If the fireduino is online
+    if (fireduino != null) {
+      // Return the socket id
+      return fireduino["sid"];
+    }
+
+    // Return an empty string
+    return "";
   }
 }

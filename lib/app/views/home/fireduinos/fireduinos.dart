@@ -22,6 +22,7 @@ class FireduinosPage extends StatelessWidget {
           if (snapshot.hasError) {
             return const Center(child: Text("An error has occured!"));
           }
+
           // If successful
           return RefreshIndicator(
             onRefresh: () async {

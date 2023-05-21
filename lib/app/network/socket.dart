@@ -97,6 +97,24 @@ class FireduinoSocket {
     }
   }
 
+  /// Extinguish fireduino device
+  void extinguish(String sid, int state) {
+    // Ensure that the socket is connected
+    if (socket == null || !socket!.connected) {
+      // Log that we are not connected
+      debugPrint('Not connected to socket server at $_host');
+      return;
+    }
+
+    print("Extinguishing fireduino device with SID: $sid");
+
+    // Emit the fireduino-extinguish event
+    socket!.emit("fireduino_extinguish", {
+      "sid": sid,
+      "state": state,
+    });
+  }
+
   /// Check fireduino device status
   void checkFireduino(String mac, Function callback, { bool isExoduino = false }) {
     // Ensure that the socket is connected
