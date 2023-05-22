@@ -1,5 +1,3 @@
-import 'package:fireduino/app/models/incident.dart';
-import 'package:fireduino/app/utils/snackbar.dart';
 import 'package:get/get.dart';
 
 import '../models/department.dart';
@@ -8,6 +6,9 @@ import '../network/location.dart';
 import '../network/request.dart';
 import '../utils/dialog.dart';
 import '../store/store.dart';
+import '../models/edit_history.dart';
+import '../models/incident.dart';
+import '../utils/snackbar.dart';
 
 import 'departments.dart';
 
@@ -31,6 +32,10 @@ class MainController extends GetxController {
   int? openedIncidentReportId;
   bool? isReportEditing;
 
+  // Edit history
+  final editHistoryList = <EditHistoryModel>[].obs;
+  final editHistorySortColumnIndex = 1.obs;
+  final editHistorySortAscending = false.obs;
 
   void logout() async {
     // Clear user data
@@ -163,5 +168,37 @@ class MainController extends GetxController {
 
     // Set incident reports
     incidentReportsList.assignAll(incidentReports);
+  }
+
+  /// Fetch edit history
+  Future<void> fetchEditHistory({ bool isShowLoader = true}) async {
+    // Show dialog that we are fetching the latest incident reports
+    if (isShowLoader) {
+      showLoader("Fetching edit history...");
+    }
+    
+    // Fetch latest incident reports
+    List<EditHistoryModel>? history = await FireduinoAPI.fetchEditHistory();
+
+    // Hide loader
+    if (isShowLoader) {
+      Get.back();
+    }
+
+    // If result is null
+    if (history == null) {
+      // Show error
+      showAppDialog("Error ", FireduinoAPI.message);
+      return;
+    }
+
+    // If result is empty
+    if (history.isEmpty) {
+      // Show error
+      showAppSnackbar("No edit history found");
+    }
+
+    // Set incident reports
+    editHistoryList.assignAll(history);
   }
 }

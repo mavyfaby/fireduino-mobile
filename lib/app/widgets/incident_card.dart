@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:fireduino/app/controllers/main.dart';
-import 'package:fireduino/app/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/incident.dart';
+import '../controllers/main.dart';
+import '../utils/date.dart';
 
 class IncidentReportCard extends StatelessWidget {
   const IncidentReportCard({ required this.id, required this.report, super.key});

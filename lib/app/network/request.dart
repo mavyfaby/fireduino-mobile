@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 
+import '../models/edit_history.dart';
 import '../models/incident.dart';
 import '../network/socket.dart';
 import '../models/dashboard.dart';
@@ -468,10 +469,7 @@ class FireduinoAPI {
   static Future<List<List<String>>?> fetchLoginHistory() async {
     try {
       /// Get the config from the server.
-      Response response = await _connect.get(FireduinoEndpoints.history,
-        query: {
-          "type": 'login'
-        },
+      Response response = await _connect.get(FireduinoEndpoints.loginHistory,
         headers: {
           'Authorization': 'Bearer ${Global.token}',
         },
@@ -676,6 +674,45 @@ class FireduinoAPI {
       return false;
     } on TimeoutException {
       return false;
+    }
+  }
+
+  /// Fetch all edit history
+  static Future<List<EditHistoryModel>?> fetchEditHistory() async {
+    try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.editHistory,
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Extract edit history
+        final List<EditHistoryModel> editHistory = [];
+
+        // For each edit history
+        for (final history in response.body['data']) {
+          // Add to list
+          editHistory.add(EditHistoryModel.fromJson(history));
+        }
+
+        // Return edit history
+        return editHistory;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
     }
   }
 }

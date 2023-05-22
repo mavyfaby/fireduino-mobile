@@ -122,8 +122,8 @@ class FireduinoPage extends StatelessWidget {
   }
 
   void showEditNameDialog({ String name = "", int estbID = -1, int deviceId = -1, String mac = "" }) {
-    final nameController = TextEditingController(text: name.isNotEmpty ? name : Get.parameters["name"]!);
     final homeController = Get.find<HomeController>();
+    final nameController = TextEditingController(text: name.isNotEmpty ? name : homeController.fireduinoName.value);
 
     showDialog(
       context: Get.context!,

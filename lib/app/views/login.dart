@@ -51,12 +51,14 @@ class LoginPage extends StatelessWidget {
                       context: context,
                       labelText: "Username or email",
                       prefixIcon: const Icon(Icons.person_outline_rounded),
+                      outlined: true
                     ),
                     onChanged: (value) {
                       loginController.username.value = value;
                     },
                   ),
                 ),
+                const SizedBox(height: 16),
                 SizedBox(
                   width: 300,
                   child: Obx(() => TextField(
@@ -65,6 +67,7 @@ class LoginPage extends StatelessWidget {
                       context: context,
                       labelText: "Password",
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
+                      outlined: true,
                       suffixIcon: IconButton(
                         icon: Icon(isPassVisible.value ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {

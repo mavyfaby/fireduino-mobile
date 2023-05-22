@@ -1,291 +1,119 @@
+import 'package:fireduino/app/models/edit_history.dart';
+import 'package:fireduino/app/utils/date.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/main.dart';
 
 class EditHistoryView extends StatelessWidget {
   const EditHistoryView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mainController = Get.find<MainController>();
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.only(left: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              '150 total number of edit logs',
-              style: TextStyle(
-                fontSize: 12,
-                height: 5
-              ),
-            ),
-
-            Container(
-              width: 350,
-              height: 200,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                                style: TextStyle(
-                                  fontSize: 12
-                                ),
-                            ),
-                            Text(
-                              '18',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold
-                                ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          padding: const EdgeInsets.only(top: 10,left: 30,bottom: 10, right: 20),
-                          child: const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Fireduino 1',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 12
-                                ),
-                              ),
-                              Text(
-                                'Last edit 10 mins ago',
-                                  style: TextStyle(
-                                    fontSize: 10
-                                  ),
-                                )
-                            ],
-                          ),
-                  ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50),
-                        child: const Text(
-                          'Christine Lange',
-                          style: TextStyle(
-                            fontSize: 12
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                      Container(
-                        padding: EdgeInsets.only(top: 2,right: 10,left: 15,bottom: 2),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Type',
-                            style: TextStyle(
-                              fontSize: 12
-                            ),),
-                            Text('Fireduino 1 IP Address',
-                            style: TextStyle(
-                              fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2,right: 10,left: 15,bottom: 2),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Before',
-                            style: TextStyle(
-                              fontSize: 12
-                            ),),
-                            Text('192.168.1.104',
-                            style: TextStyle(
-                              fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 2,right: 10,left: 15,bottom: 2),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('After',
-                            style: TextStyle(
-                              fontSize: 12
-                            ),),
-                            Text('192.168.1.101',
-                            style: TextStyle(
-                              fontSize: 12
-                            ),)
-                          ],
-                        ),
-                      ),
-                ],
-              ),
-            ),
-            Container(
-              child: const Text(
-                ''
-              ),
-            ),
-
-            Container(
-              width: 350,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                            ),
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold
-                              )
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10,left: 30,bottom: 10, right: 20),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fireduino 2',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 12,
-                                
-                              ),
-                            ),
-                            Text(
-                              'Last edit 54 mins ago',
-                              style: TextStyle(
-                                fontSize: 10
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left:50),
-                        child: const Text(
-                          'Christine Lange',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            
-            Container(
-              child: const Text(
-                ''
-              ),
-            ),
-
-            Container(
-              width: 350,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10, right: 10),
-                        child: const Column(
-                          children: [
-                            Text(
-                              'MAR',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                            ),
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold
-                              )
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10,left: 30,bottom: 10, right: 20),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Fireduino 3',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 12,
-                                
-                              ),
-                            ),
-                            Text(
-                              'Last edit 2 hours ago',
-                              style: TextStyle(
-                                fontSize: 10
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left:50),
-                        child: const Text(
-                          'Maverick Fabroa',
-                              style: TextStyle(
-                                fontSize: 12
-                              ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ],
+      body: RefreshIndicator(
+        triggerMode: RefreshIndicatorTriggerMode.anywhere,
+        onRefresh: () async {
+          await Get.find<MainController>().fetchEditHistory(isShowLoader: false);
+        },
+        child: SizedBox.expand(
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            // ignore: invalid_use_of_protected_member
+            child: Obx(() => EditHistoryTable(data: mainController.editHistoryList.value)),
+          ),
         ),
       ),
     );
   }
+}
+
+class EditHistoryTable extends StatelessWidget {
+  const EditHistoryTable({ required this.data, super.key });
+
+  final List<EditHistoryModel> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          cardTheme: Theme.of(context).cardTheme.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ?
+              Theme.of(context).colorScheme.onInverseSurface :
+              Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.7),
+          ),
+          dividerTheme: Theme.of(context).dividerTheme.copyWith(
+            color: Theme.of(context).brightness == Brightness.light ?
+              Theme.of(context).colorScheme.outlineVariant :
+              Theme.of(context).colorScheme.outline.withOpacity(0.4),
+          ),
+        ),
+        child: Obx(() => PaginatedDataTable(
+          sortColumnIndex: Get.find<MainController>().editHistorySortColumnIndex.value,
+          sortAscending: Get.find<MainController>().editHistorySortAscending.value,
+          rowsPerPage: 10,
+          columns: <DataColumn>[
+            DataColumn(label: const Text('Type'), onSort: onSort),
+            DataColumn(label: const Text('Before'), onSort: onSort),
+            DataColumn(label: const Text('After'), onSort: onSort),
+            DataColumn(label: const Text('Date'), onSort: onSort),
+          ],
+          source: _DataSource(data),
+        )),
+      ),
+    );
+  }
+
+  /// Sort table
+  void onSort(int columnIndex, bool ascending) {
+    Get.find<MainController>().editHistorySortAscending.value = ascending;
+    Get.find<MainController>().editHistorySortColumnIndex.value = columnIndex;
+
+    if (Get.find<MainController>().editHistorySortColumnIndex.value == 0) {
+      data.sort((a, b) => a.name.compareTo(b.name));
+    } else if (Get.find<MainController>().editHistorySortColumnIndex.value == 1) {
+      data.sort((a, b) => a.before.compareTo(b.before));
+    } else if (Get.find<MainController>().editHistorySortColumnIndex.value == 2) {
+      data.sort((a, b) => a.after.compareTo(b.after));
+    } else if (Get.find<MainController>().editHistorySortColumnIndex.value == 3) {
+      data.sort((a, b) => a.date.compareTo(b.date));
+    }
+
+    if (!Get.find<MainController>().editHistorySortAscending.value) {
+      data.assignAll(data.reversed.toList());
+    }
+  }
+}
+
+class _DataSource extends DataTableSource {
+
+  _DataSource(this.data);
+
+  final List<EditHistoryModel> data;
+
+  @override
+  DataRow getRow(int index) {
+    return DataRow.byIndex(
+      index: index,
+      cells: [
+        DataCell(Text(data[index].name)),
+        DataCell(Text(data[index].before)),
+        DataCell(Text(data[index].after)),
+        DataCell(Text(getReadableDate(data[index].date))),
+      ],
+    );
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 0;
 }

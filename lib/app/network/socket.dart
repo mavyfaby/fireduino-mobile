@@ -106,8 +106,6 @@ class FireduinoSocket {
       return;
     }
 
-    print("Extinguishing fireduino device with SID: $sid");
-
     // Emit the fireduino-extinguish event
     socket!.emit("fireduino_extinguish", {
       "sid": sid,
