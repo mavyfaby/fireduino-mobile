@@ -14,7 +14,6 @@ import 'access_logs/access_logs.dart';
 import 'edit_history/edit_history.dart';
 import 'login_history/login_history.dart';
 import 'sms_history/sms_history.dart';
-import 'preferences/preferences.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -34,7 +33,6 @@ class MainPage extends StatelessWidget {
       const EditHistoryView(),
       const LoginHistoryView(),
       const SMSHistoryView(),
-      const PreferencesView()
     ];
 
     return WillPopScope(
@@ -62,9 +60,7 @@ class MainPage extends StatelessWidget {
               homeController.pageIndex.value == 0 ?
                 "Dashboard" :
                 "Fireduinos" : 
-              mainController.pageIndex.value > Global.drawerItems.length ?
-                "Preferences" :
-                Global.drawerItems[mainController.pageIndex.value - 1]["title"],
+              Global.drawerItems[mainController.pageIndex.value - 1]["title"],
           )),
           actions: [
             Obx(() => mainController.pageIndex.value == 2 ? const SearchDepartments() : const SizedBox())

@@ -24,6 +24,7 @@ class FireDepartmentsView extends StatelessWidget {
           position: LatLng(dept.latitude, dept.longitude),          
           infoWindow: InfoWindow(
             title: dept.name,
+            
             snippet: dept.address,
             onTap: () {
               showDeptInfo(dept); 
@@ -68,8 +69,6 @@ class FireDepartmentsView extends StatelessWidget {
             // Get the current location of the user
             Geolocator.getCurrentPosition().then((location) {
               deptController.currentPosition = location;
-
-              print("ANIMTED");
 
               controller.animateCamera(
                 CameraUpdate.newCameraPosition(

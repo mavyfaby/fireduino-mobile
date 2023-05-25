@@ -14,7 +14,7 @@ class SearchDepartments extends StatelessWidget {
     final deptController = Get.find<FireDepartmentsController>();
 
     return SearchAnchor(
-      isFullScreen: true,
+      isFullScreen: false,
       builder: (context, controller) {
         return IconButton(
           onPressed: () {
@@ -22,6 +22,10 @@ class SearchDepartments extends StatelessWidget {
           },
           icon: const Icon(Icons.search_outlined)
         );
+      },
+
+      viewBuilder:(suggestions) {
+        return suggestions.toList()[0];
       },
 
       suggestionsBuilder: (context, controller) {
@@ -44,14 +48,13 @@ class SearchDepartments extends StatelessWidget {
                   ),
                 );
               }
-              
 
-              // If no data
+              // Check if has no data
               if (!snapshot.hasData) {
                 return const Padding(
-                  padding: EdgeInsets.all(16.0),
+                  padding: EdgeInsets.only(top: 16),
                   child: Center(
-                    child: CircularProgressIndicator()
+                    child: Text("No data found"),
                   ),
                 );
               }
@@ -70,40 +73,40 @@ class SearchDepartments extends StatelessWidget {
               snapshot.data!.sort((a, b) => a.distanceValue!.compareTo(b.distanceValue!));
 
               return ListView.builder(
-                shrinkWrap: true,
+                padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                itemCount: snapshot.data!.length + 1,
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  if (index == snapshot.data!.length) {
-                    return const ListTile();
-                  }
-
                   return ListTile(
-                    leading: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.location_on_rounded),
-                        Text(
-                          snapshot.data![index].distance!,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ]
+                    leading: SizedBox(
+                      width: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.location_on_rounded),
+                          const SizedBox(height: 3),
+                          Text(
+                            snapshot.data![index].distance!,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ]
+                      ),
                     ),
                     title: Text(snapshot.data![index].name),
                     subtitle: Text(snapshot.data![index].address, style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground.withOpacity(0.6)
+                      color: Theme.of(context).colorScheme.onBackground.withOpacity(0.7)
                     )),
                     onTap: () {
                       controller.closeView(controller.text);
-
+              
                       if (deptController.mapController == null) {
                         return;
                       }
-
+              
                       deptController.mapController!.animateCamera(
                         CameraUpdate.newCameraPosition(
                           CameraPosition(

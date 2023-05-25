@@ -29,7 +29,7 @@ class FireduinoDrawer extends StatelessWidget {
             }
 
             // If logout
-            if (index == 9) {
+            if (index == 8) {
               confirmLogout();
               return;
             }
@@ -70,14 +70,8 @@ class FireduinoDrawer extends StatelessWidget {
             )).toList(),
             
             const Padding(
-              padding:EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-              child: Divider(height: 1)
-            ),
-
-            const NavigationDrawerDestination(
-              label:Text("Preferences"),
-              icon: Icon(Icons.settings_suggest_outlined),
-              selectedIcon:Icon(Icons.settings_suggest_rounded),
+              padding: EdgeInsets.all(16),
+              child: Divider(height: 1),
             ),
 
             const NavigationDrawerDestination(
