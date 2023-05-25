@@ -1,8 +1,8 @@
-import 'package:fireduino/app/models/edit_history.dart';
-import 'package:fireduino/app/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/edit_history.dart';
+import '../../utils/date.dart';
 import '../../controllers/main.dart';
 
 class EditHistoryView extends StatelessWidget {

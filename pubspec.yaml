@@ -47,6 +47,8 @@ dependencies:
   geolocator: ^9.0.2
   fl_chart: ^0.62.0
   ai_barcode_scanner: ^0.0.6
+  vibration: ^1.7.7
+  flutter_ringtone_player: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +96,8 @@ flutter:
   assets:
     - assets/svg/fireduino_icon.svg
     - assets/png/fireduino_icon.png
+    - assets/alarm/fire_alarm.mp3
+    - assets/alarm/smoke_alarm.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

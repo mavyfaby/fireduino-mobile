@@ -4,6 +4,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 import '../store/global.dart';
 import '../env/config.dart';
+import 'detection.dart';
 
 class FireduinoSocket {
   /// The host of the socket server
@@ -76,6 +77,16 @@ class FireduinoSocket {
       debugPrint('fireduino_connect: $data');
       // Set the online fireduino devices
       setOnlineFireduinos(data);
+    });
+
+    // Listen for fire
+    socket!.on('fire_detected', (mac) {
+      onFireDetect(mac);
+    });
+
+    // Listen for smoke
+    socket!.on('smoke_detected', (mac) {
+      onSmokeDetect(mac);
     });
 
     /// Listen for `fireduino_disconnect` event

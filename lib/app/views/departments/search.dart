@@ -1,10 +1,10 @@
-import 'package:fireduino/app/controllers/departments.dart';
-import 'package:fireduino/app/network/request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../network/request.dart';
 import '../../env/config.dart';
+import '../../controllers/departments.dart';
 
 class SearchDepartments extends StatelessWidget {
   const SearchDepartments({super.key});

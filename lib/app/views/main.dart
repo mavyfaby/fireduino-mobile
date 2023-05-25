@@ -1,4 +1,3 @@
-import 'package:fireduino/app/views/departments/search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +7,7 @@ import '../widgets/drawer.dart';
 import '../store/global.dart';
 
 import 'home/home.dart';
+import 'departments/search.dart';
 import 'departments/departments.dart';
 import 'incident_reports/incident_reports.dart';
 import 'access_logs/access_logs.dart';
