@@ -105,7 +105,7 @@ class DashData extends StatelessWidget {
             return;
           }
 
-          await Get.find<MainController>().fetchFireDepartments();
+          await Get.find<MainController>().fetchFireDepartments(null);
           Get.find<MainController>().pageStack.add(2);
           Get.find<MainController>().pageIndex.value = 2;
         },
@@ -147,7 +147,8 @@ class DashIncidentReports extends StatelessWidget {
         Theme.of(context).colorScheme.onInverseSurface :
         Theme.of(context).colorScheme.surfaceVariant,
       child: InkWell(
-        onTap: () {
+        onTap: () async {
+          await Get.find<MainController>().fetchIncidentReports();
           Get.find<MainController>().pageStack.add(3);
           Get.find<MainController>().pageIndex.value = 3;
         },

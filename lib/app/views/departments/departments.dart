@@ -63,9 +63,14 @@ class FireDepartmentsView extends StatelessWidget {
           onMapCreated: (GoogleMapController controller) async {
             // Set {isReady} to true
             isReady.value = true;
+            deptController.mapController = controller;
 
             // Get the current location of the user
             Geolocator.getCurrentPosition().then((location) {
+              deptController.currentPosition = location;
+
+              print("ANIMTED");
+
               controller.animateCamera(
                 CameraUpdate.newCameraPosition(
                   CameraPosition(

@@ -1,3 +1,4 @@
+import 'package:fireduino/app/views/departments/search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,13 +66,16 @@ class MainPage extends StatelessWidget {
                 "Preferences" :
                 Global.drawerItems[mainController.pageIndex.value - 1]["title"],
           )),
+          actions: [
+            Obx(() => mainController.pageIndex.value == 2 ? const SearchDepartments() : const SizedBox())
+          ],
         ),
     
         drawer: FireduinoDrawer(
           onSelect: (index) async {
             // If selecting, Fire departments, request location permission
             if (index == 2) {
-              await Get.find<MainController>().fetchFireDepartments();
+              await Get.find<MainController>().fetchFireDepartments(null);
             }
 
             // If selecting Incident reports

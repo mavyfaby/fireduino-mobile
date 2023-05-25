@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../models/edit_history.dart';
 import '../models/incident.dart';
@@ -336,10 +337,14 @@ class FireduinoAPI {
   }
 
   /// Fetches fire departments from the server
-  static Future<List<FireDepartmentModel>?> fetchFireDepartments() async {
+  static Future<List<FireDepartmentModel>> fetchFireDepartments({ String? search, LatLng? location }) async {
     try {
       /// Get the config from the server.
       Response response = await _connect.get(FireduinoEndpoints.departments,
+        query: location != null ? {
+          'search': search ?? '',
+          'location': '${location.latitude},${location.longitude}',
+        } : null,
         headers: {
           'Authorization': 'Bearer ${Global.token}',
         },
@@ -352,7 +357,7 @@ class FireduinoAPI {
       if (response.statusCode == 200) {
         // If not success
         if (!response.body['success']) {
-          return null;
+          return [];
         }
 
         // Extract fire departments
@@ -368,9 +373,9 @@ class FireduinoAPI {
         return fireDepartments;
       }
 
-      return null;
+      return [];
     } on TimeoutException {
-      return null;
+      return [];
     }
   }
 

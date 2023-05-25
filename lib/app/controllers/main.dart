@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 
 import '../models/department.dart';
@@ -49,19 +50,19 @@ class MainController extends GetxController {
     Get.offAllNamed('/main');
   }
 
-  Future<void> fetchFireDepartments() async {
+  Future<void> fetchFireDepartments(LatLng? location) async {
     await FireduinoLocation.ensureLocationServiceEnabled();
     await FireduinoLocation.ensureLocationPermissionAccepted();
 
     //  Show dialog that we are fetching the latest fire departments
     showLoader("Getting latest fire departments...");
     // Fetch latest fire departments
-    List<FireDepartmentModel>? departments = await FireduinoAPI.fetchFireDepartments();
+    List<FireDepartmentModel> departments = await FireduinoAPI.fetchFireDepartments();
     // Hide loader
     Get.back();
 
     // If result is null
-    if (departments == null) {
+    if (departments.isEmpty) {
       // Show error
       showAppDialog("Error ", FireduinoAPI.message);
       return;
