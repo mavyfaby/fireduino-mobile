@@ -106,6 +106,7 @@ class DashData extends StatelessWidget {
           }
 
           await Get.find<MainController>().fetchFireDepartments(null);
+          await Get.find<MainController>().fetchEstablishment(Global.user.eid!);
           Get.find<MainController>().pageStack.add(2);
           Get.find<MainController>().pageIndex.value = 2;
         },

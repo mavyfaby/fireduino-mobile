@@ -72,6 +72,7 @@ class MainPage extends StatelessWidget {
             // If selecting, Fire departments, request location permission
             if (index == 2) {
               await Get.find<MainController>().fetchFireDepartments(null);
+              await Get.find<MainController>().fetchEstablishment(Global.user.eid!);
             }
 
             // If selecting Incident reports
@@ -94,6 +95,11 @@ class MainPage extends StatelessWidget {
               await Get.find<MainController>().fetchLoginHistory();
             }
 
+            // If selecting sms history
+            if (index == 7) {
+              await Get.find<MainController>().fetchSmsHistory();
+            }
+
             homeController.pageIndex.value = 0;
             mainController.pageStack.add(index);
             mainController.pageIndex.value = index;
@@ -101,6 +107,7 @@ class MainPage extends StatelessWidget {
         ),
       
         body: Obx(() => pages[mainController.pageIndex.value - 1]),
+        resizeToAvoidBottomInset: false,
       )
     );
   }

@@ -2,6 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 
 import '../models/department.dart';
+import '../models/sms_history.dart';
 import '../network/auth.dart';
 import '../network/location.dart';
 import '../network/request.dart';
@@ -10,6 +11,7 @@ import '../store/store.dart';
 import '../models/edit_history.dart';
 import '../models/incident.dart';
 import '../utils/snackbar.dart';
+import '../models/establishment.dart';
 
 import 'departments.dart';
 
@@ -37,6 +39,13 @@ class MainController extends GetxController {
   final editHistoryList = <EditHistoryModel>[].obs;
   final editHistorySortColumnIndex = 1.obs;
   final editHistorySortAscending = false.obs;
+
+  // SMS history
+  final smsHistoryList = <SmsHistoryModel>[].obs;
+  final smsHistorySortColumnIndex = 1.obs;
+  final smsHistorySortAscending = false.obs;
+
+  final estb = EstablishmentModel().obs;
 
   void logout() async {
     // Clear user data
@@ -202,4 +211,51 @@ class MainController extends GetxController {
     // Set incident reports
     editHistoryList.assignAll(history);
   }
+
+  Future<void> fetchEstablishment(int id) async {
+    // Show dialog that we are fetching the latest incident reports
+    showLoader("Fetching establishment...");
+
+    // Fetch latest incident reports
+    EstablishmentModel? estb = await FireduinoAPI.fetchEstablishment(id);
+    // Hide loader
+    Get.back();
+
+    // If result is null
+    if (estb == null) {
+      // Show error
+      showAppDialog("Error ", FireduinoAPI.message);
+      return;
+    }
+
+    // Set incident reports
+    Get.find<MainController>().estb.value = estb;
+  }
+
+  Future<void> fetchSmsHistory({ bool isShowLoader = true}) async {
+    // Show dialog that we are fetching the latest incident reports
+    if (isShowLoader) {
+      showLoader("Fetching sms history...");
+    }
+
+    // Fetch latest incident reports
+    List<SmsHistoryModel>? list = await FireduinoAPI.fetchSmsHistory();
+
+    // Hide loader
+    if (isShowLoader) {
+      Get.back();
+    }
+
+    // If result is null
+    if (list == null) {
+      // Show error
+      showAppDialog("Error ", FireduinoAPI.message);
+      return;
+    }
+
+    // Set incident reports
+    Get.find<MainController>().smsHistoryList.value = list;
+  }
+
+
 }

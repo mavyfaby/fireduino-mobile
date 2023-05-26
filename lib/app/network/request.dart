@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../models/edit_history.dart';
 import '../models/incident.dart';
+import '../models/sms_history.dart';
 import '../network/socket.dart';
 import '../models/dashboard.dart';
 import '../models/department.dart';
@@ -17,7 +19,7 @@ import '../utils/date.dart';
 import 'endpoints.dart';
 
 // GetConnect instance
-final _connect = GetConnect();
+final _connect = GetConnect(timeout: const Duration(seconds: 20));
 
 /// This class contains all the API calls for the app
 class FireduinoAPI {
@@ -80,6 +82,36 @@ class FireduinoAPI {
 
         // Return config
         return establishments;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
+
+  /// Fetches establishments from the server
+  static Future<EstablishmentModel?> fetchEstablishment(int id) async {
+    try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.establishment, query: {
+        'id': "$id",
+      },
+      headers: {
+          'Authorization': 'Bearer ${Global.token}',
+      });
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Return config
+        return EstablishmentModel.fromJson(response.body['data']);
       }
 
       return null;
@@ -353,6 +385,8 @@ class FireduinoAPI {
       // Set data
       setData(response);
 
+      debugPrint("ASDASD ${response.body}");
+
       /// If the response is successful
       if (response.statusCode == 200) {
         // If not success
@@ -372,7 +406,7 @@ class FireduinoAPI {
         // Return config
         return fireDepartments;
       }
-
+      
       return [];
     } on TimeoutException {
       return [];
@@ -713,6 +747,44 @@ class FireduinoAPI {
 
         // Return edit history
         return editHistory;
+      }
+
+      return null;
+    } on TimeoutException {
+      return null;
+    }
+  }
+
+  static Future<List<SmsHistoryModel>?> fetchSmsHistory() async {
+     try {
+      /// Get the config from the server.
+      Response response = await _connect.get(FireduinoEndpoints.smsHistory,
+        headers: {
+          'Authorization': 'Bearer ${Global.token}',
+        },
+        contentType: 'application/x-www-form-urlencoded'
+      );
+      // Set data
+      setData(response);
+
+      /// If the response is successful
+      if (response.statusCode == 200) {
+        // If not success
+        if (!response.body['success']) {
+          return null;
+        }
+
+        // Extract edit history
+        final List<SmsHistoryModel> smsHistory = [];
+
+        // For each edit history
+        for (final history in response.body['data']) {
+          // Add to list
+          smsHistory.add(SmsHistoryModel.fromJson(history));
+        }
+
+        // Return edit history
+        return smsHistory;
       }
 
       return null;

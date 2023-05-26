@@ -7,9 +7,8 @@ class FireDepartmentModel {
   final double longitude;
   final DateTime createdAt;
 
-  String? distance;
-  String? duration;
-  int? distanceValue;
+  double? distance;
+  double? duration;
 
   FireDepartmentModel({
     required this.id,
@@ -22,7 +21,6 @@ class FireDepartmentModel {
 
     this.distance,
     this.duration,
-    this.distanceValue
   });
 
   factory FireDepartmentModel.fromJson(Map<String, dynamic> json) {
@@ -34,9 +32,8 @@ class FireDepartmentModel {
       latitude: double.parse(json['e']),
       longitude: double.parse(json['f']),
       createdAt: DateTime.parse(json['g']),
-      distance: json['distance'] != null ? json['distance']['text'] : null,
-      duration: json['duration'] != null ? json['duration']['text'] : null,
-      distanceValue: json['distance'] != null ? json['distance']['value'] : null
+      distance: json['distance'],
+      duration: json['duration'],
     );
   }
 
@@ -50,6 +47,5 @@ class FireDepartmentModel {
     'g': createdAt.toIso8601String(),
     'distance': distance,
     'duration': duration,
-    'distanceValue': distanceValue
   };
 }

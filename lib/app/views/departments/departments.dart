@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/departments.dart';
+import '../../controllers/main.dart';
 import '../../models/department.dart';
 import '../../env/config.dart';
+import '../../models/establishment.dart';
 
 class FireDepartmentsView extends StatelessWidget {
   const FireDepartmentsView({super.key});
@@ -15,6 +17,7 @@ class FireDepartmentsView extends StatelessWidget {
     Set<Marker> markers = {};
 
     final deptController = Get.find<FireDepartmentsController>();
+    final mainController = Get.find<MainController>();
     final isReady = false.obs;
 
     for (FireDepartmentModel dept in deptController.fireDepartments) {
@@ -33,6 +36,21 @@ class FireDepartmentsView extends StatelessWidget {
         ),
       );
     }
+
+    markers.add(
+      Marker(
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        markerId: MarkerId(mainController.estb.value.id.toString()),
+        position: LatLng(double.parse(mainController.estb.value.latitude!), double.parse(mainController.estb.value.longitude!)),
+        infoWindow: InfoWindow(
+          title: mainController.estb.value.name,
+          snippet: mainController.estb.value.address,
+          onTap: () {
+            showEstbInfo(mainController.estb.value); 
+          }
+        ),
+      ),
+    );    
 
     double x = 0;
     double y = 0;
@@ -109,6 +127,46 @@ class FireDepartmentsView extends StatelessWidget {
               const SizedBox(width: 8),
               Flexible(
                 child: Text(dept.address)
+              )
+            ],
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Get.back();
+          },
+          child: const Text("Close"),
+        ),
+      ],
+    ));
+  }
+
+  /// Show the establishment information
+  void showEstbInfo(EstablishmentModel estb) {
+    Get.dialog(AlertDialog(
+      title: Text(estb.name!),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Text("Contact:", style: Get.textTheme.titleMedium),
+              const SizedBox(width: 8),
+              Text(estb.phone!)
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Address:", style: Get.textTheme.titleMedium),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(estb.address!)
               )
             ],
           ),

@@ -10,8 +10,13 @@ import '../controllers/main.dart';
 import '../utils/dialog.dart';
 
 /// Calls the [onFireDetect] if a fire is detected
-void onFireDetect(String mac) {
-  debugPrint("FIRE DETECTED: $mac");
+void onFireDetect(String data) {
+  debugPrint("FIRE DETECTED: $data");
+
+  final split = data.split("_");
+  final mac = split[1];
+  // final estb = split[0];
+
   // Vibrate the device
   Vibration.vibrate(pattern: getPatterns(15));
   FlutterRingtonePlayer.play(
@@ -22,10 +27,21 @@ void onFireDetect(String mac) {
 
   showAppDialog("Fire Detected!", "The fireduino $mac detected a fire in your area and is already responding and extinguishing the fire!", actions: [
     TextButton(
-      child: const Text("Go to Fireduinos"),
+      child: const Text("Stop"),
       onPressed: () {
         FlutterRingtonePlayer.stop();
         Vibration.cancel();
+        Get.back();
+      },
+    ),
+    TextButton(
+      child: const Text("Go to Fireduinos"),
+      onPressed: () {
+        Timer(const Duration(seconds: 30), () {
+          FlutterRingtonePlayer.stop();
+          Vibration.cancel();
+        });
+
         Get.back();
         Get.find<MainController>().pageIndex.value = 1;
         Get.find<HomeController>().pageIndex.value = 1;
@@ -42,8 +58,12 @@ void onFireDetect(String mac) {
 }
 
 /// Calls the [onSmokeDetect] if a smoke is detected
-void onSmokeDetect(String mac) {
-  debugPrint("SMOKE DETECTED: $mac");
+void onSmokeDetect(String data) {
+  debugPrint("SMOKE DETECTED: $data");
+
+  final split = data.split("_");
+  final mac = split[1];
+  // final estb = split[0];
 
   // Vibrate the device
   Vibration.vibrate(pattern: getPatterns(5));
@@ -55,10 +75,21 @@ void onSmokeDetect(String mac) {
 
   showAppDialog("Smoke Detected!", "The fireduino $mac detected a smoke in your area. Please check your surroundings!", actions: [
     TextButton(
-      child: const Text("Go to Fireduinos"),
+      child: const Text("Stop"),
       onPressed: () {
         FlutterRingtonePlayer.stop();
         Vibration.cancel();
+        Get.back();
+      },
+    ),
+    TextButton(
+      child: const Text("Go to Fireduinos"),
+      onPressed: () {
+        Timer(const Duration(seconds: 15), () {
+          FlutterRingtonePlayer.stop();
+          Vibration.cancel();
+        });
+
         Get.back();
         Get.find<MainController>().pageIndex.value = 1;
         Get.find<HomeController>().pageIndex.value = 1;

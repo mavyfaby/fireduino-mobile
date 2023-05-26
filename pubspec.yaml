@@ -49,6 +49,7 @@ dependencies:
   ai_barcode_scanner: ^0.0.6
   vibration: ^1.7.7
   flutter_ringtone_player: ^3.2.0
+  async: ^2.11.0
 
 dev_dependencies:
   flutter_test:
